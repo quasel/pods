@@ -1,11 +1,12 @@
 <?php
 /*
-Plugin Name: Pods Starter Plugin
-Plugin URI: http://example.com/
-Description: Description
+Plugin Name: Omega Pods
+Plugin URI: http://pods.io
+Description: Creates automatic output of Pods custom post types via Pods Templates.
 Version: 0.0.1
-Author: Your Name
-Author URI: http://example.com/
+Author: Pods Framework Team
+Author URI: http://pods.io/about/
+Text Domain: omega-pods
 License: GPL v2 or later
 */
 
@@ -39,16 +40,16 @@ License: GPL v2 or later
 if ( !defined( 'ABSPATH' ) ) exit;
 
 /**
- * Pods_Extend class
+ * Omega_Pods class
  *
- * @class Pods_Extend The class that holds the entire Pods_Extend plugin
+ * @class Omega_Pods The class that holds the entire Omega_Pods plugin
  *
  * @since 0.0.1
  */
-class Pods_Extend {
+class Omega_Pods {
 
 	/**
-	 * Constructor for the Pods_Extend class
+	 * Constructor for the Omega_Pods class
 	 *
 	 * Sets up all the appropriate hooks and actions
 	 * within the plugin.
@@ -75,29 +76,25 @@ class Pods_Extend {
 		// Loads admin scripts and styles
 		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
 
+
 		/**
-		 * Hooks that extend Pods
-		 *
-		 * NOTE: These are some example hooks that are useful for extending Pods, uncomment as needed.
+		 * These hooks make the Pods Omega Magic Happen
 		 */
-		//Example: Add a tab to the pods editor for a CPT Pod called 'jedi
-		//add_filter( 'pods_admin_setup_edit_tabs_post_type_jedi', array( $this, 'jedi_tabs' ), 11, 3 );
+		//Add option tab for post types
+		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'omega_tab' ), 11, 3 );
 
-		//Example: Add fields to the Pods editor for all Advanced Content Types
-		//add_filter( 'pods_admin_setup_edit_options_advanced', array( $this, 'act_options' ), 11, 2 );
+		//Add options to that tab
+		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'omega_options' ), 12, 2 );
 
-		/**
-		//Example: Add a tab for all post types and some options inside of it.
-		//See example callbacks below
-		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'pt_tab' ), 11, 3 );
-		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'pt_options' ), 12, 2 );
-		*/
+		//Include and init front-end class
+		add_action( 'plugins_loaded', array(  $this, 'omega' ) );
+		
 	}
 
 	/**
-	 * Initializes the Pods_Extend() class
+	 * Initializes the Omega_Pods() class
 	 *
-	 * Checks for an existing Pods_Extend() instance
+	 * Checks for an existing Omega_Pods() instance
 	 * and if it doesn't find one, creates it.
 	 *
 	 * @since 0.0.1
@@ -106,7 +103,7 @@ class Pods_Extend {
 		static $instance = false;
 
 		if ( ! $instance ) {
-			$instance = new Pods_Extend();
+			$instance = new Omega_Pods();
 		}
 
 		return $instance;
@@ -136,7 +133,7 @@ class Pods_Extend {
 	 * @since 0.0.1
 	 */
 	public function localization_setup() {
-		load_plugin_textdomain( 'pods-extend', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'omega-pods', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 	}
 
 	/**
@@ -151,12 +148,12 @@ class Pods_Extend {
 		/**
 		 * All styles goes here
 		 */
-		wp_enqueue_style( 'pods-extend-styles', plugins_url( 'css/front-end.css', __FILE__ ) );
+		wp_enqueue_style( 'omega-pods-styles', plugins_url( 'css/front-end.css', __FILE__ ) );
 
 		/**
 		 * All scripts goes here
 		 */
-		wp_enqueue_script( 'pods-extend-scripts', plugins_url( 'js/front-end.js', __FILE__ ), array( ), false, true );
+		wp_enqueue_script( 'omega-pods-scripts', plugins_url( 'js/front-end.js', __FILE__ ), array( ), false, true );
 
 
 		/**
@@ -164,8 +161,8 @@ class Pods_Extend {
 		 *
 		 * Uncomment line below and replace with proper localization variables.
 		 */
-		// $translation_array = array( 'some_string' => __( 'Some string to translate', 'pods-extend' ), 'a_value' => '10' );
-		// wp_localize_script( 'pods-extend-scripts', 'podsExtend', $translation_array ) );
+		// $translation_array = array( 'some_string' => __( 'Some string to translate', 'omega-pods' ), 'a_value' => '10' );
+		// wp_localize_script( 'omega-pods-scripts', 'podsExtend', $translation_array ) );
 
 	}
 
@@ -181,58 +178,87 @@ class Pods_Extend {
 		/**
 		 * All admin styles goes here
 		 */
-		wp_enqueue_style( 'pods-extend-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
+		wp_enqueue_style( 'omega-pods-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
 
 		/**
 		 * All admin scripts goes here
 		 */
-		wp_enqueue_script( 'pods-extend-admin-scripts', plugins_url( 'js/admin.js', __FILE__ ), array( ), false, true );
+		wp_enqueue_script( 'omega-pods-admin-scripts', plugins_url( 'js/admin.js', __FILE__ ), array( ), false, true );
 
 
 	}
 
-	function pt_tab( $tabs, $pod, $addtl_args ) {
-		$tabs[ 'pods-extend' ] = __( 'Pods Extend Options', 'pods-extend' );
+	/**
+	 * Add an Omega Pods option tab.
+	 *
+	 * @param $tabs
+	 * @param $pod
+	 * @param $addtl_args
+	 *
+	 * @return mixed
+	 *
+	 * @since 0.0.1
+	 */
+	function omega_tab( $tabs, $pod, $addtl_args ) {
+		$tabs[ 'omega-pods' ] = __( 'Omega Pods Options', 'omega-pods' );
 		return $tabs;
 	}
 
-	function pt_options( $options, $pod  ) {
-
-		$options[ 'pods-extend' ] = array(
-			'example_boolean' => array(
-				'label' => __( 'Enable something?', 'pods-extend' ),
-				'help' => __( 'Helpful info about this option that will appear in its help bubble', 'pods-extend' ),
-				'type' => 'boolean',
-				'default' => true,
-				'boolean_yes_label' => 'Yes'
-			),
-			'example_text' => array(
-				'label' => __( 'Enter some text', 'pods' ),
-				'help' => __( 'Helpful info about this option that will appear in its help bubble', 'pods-extend' ),
-				'type' => 'text',
-				'default' => 'Default text',
-			),
-			'dependency_example' => array(
-				'label' => __( 'Dependency Example', 'pods' ),
-				'help' => __( 'When set to true, this field reveals the field "dependent_example".', 'pods' ),
+	/**
+	 * Adds options for this plugin under the omega tab.
+	 *
+	 * @param $options
+	 * @param $pod
+	 *
+	 * @return mixed
+	 *
+	 * @since 0.0.1
+	 */
+	function omega_options( $options, $pod  ) {
+		$options[ 'omega-pods' ] = array(
+			'omega_enable' => array(
+				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods' ),
+				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods' ),
 				'type' => 'boolean',
 				'default' => false,
 				'dependency' => true,
 				'boolean_yes_label' => ''
 			),
-			'dependent_example' => array(
-			'label' => __( 'Dependent Option', 'pods' ),
-			'help' => __( 'This field is hidden unless the field "dependency_example" is set to true.', 'pods' ),
-			'type' => 'text',
-			'depends-on' => array( 'dependency_example' => true )
-			)
-
+			'omega_single' => array(
+				'label' => __( 'Single item view template', 'pods' ),
+				'help' => __( 'Name of Pods template to use for single item view', 'pods' ),
+				'type' => 'text',
+				'default' => false,
+				'depends-on' => array( 'omega_enable' => true )
+			),
+			'omega_archive' => array(
+				'label' => __( 'Archive view template', 'pods' ),
+				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods' ),
+				'type' => 'text',
+				'default' => false,
+				'depends-on' => array( 'omega_enable' => true )
+			),
 		);
 		return $options;
 	}
 
+	/**
+	 * Include/ init the front end class on the front end only
+	 *
+	 * @return Omega_Pods_Frontend
+	 *
+	 * @since 0.0.1
+	 */
+	function omega() {
+		if ( !is_admin() ) {
+			include_once( 'classes/Omega-Pods-Frontend.php' );
+			$omega = new Omega_Pods_Frontend();
+			return $omega;
+		}
+	}
 
 
-} // Pods_Extend
 
-$pods_extend = Pods_Extend::init();
+} // Omega_Pods
+
+$pods_extend = Omega_Pods::init();
