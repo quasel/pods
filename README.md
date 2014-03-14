@@ -1,42 +1,21 @@
-Pods Starter Plugin
+ Omega Pods
 ===========
 
-A starter plugin for extending Pods' functionality.
+Automatic Pods Template output for Pods custom post types.
 
-Requires Pods 2.3.18 or later. (Please keep this notice in your plugin and set the appropriate version.)
+NOTE: This plugin is still in its first beta. Use with caution and report all issues.
+
+Requires Pods 2.3.18 or later.
 
 Instructions
 ============
+I the Pods editor, under the "Omega Pods Options" tab, click the "Enable Automatic Pods Templates for this Pod?" option.
 
-* Naming
+Two new fields will be revealed: "Single item view template" and "Archive view template." In these fields enter the name of Pods Templates that you wish to use.
 
-  You will need to change the name of the plugin in a few simple steps:
-
-    * Rename the base plugin folder name and primary PHP file named 'pods-extend.php' to your plugin's name. Make sure the folder name matches the name of the PHP file (without .php on the end).
-
-    * Search for 'pods-extend' and replace with your desired plugin name in all lowercase with dashes between words (if desired).
-
-    * Search for 'Pods Starter Plugin' and replace with your plugin's proper name.
-
-    * Search for 'Pods_Extend' and replace with your plugin's proper name with underscores instead of spaces between words.
-
-    * Be sure to set the plugin header meta data. See [https://codex.wordpress.org/Writing_a_Plugin#Names.2C_Files.2C_and_Locations](https://codex.wordpress.org/Writing_a_Plugin#Names.2C_Files.2C_and_Locations).
-
-* Usage
- 
-<em>Tutorials, like winter are coming.</em>
-
-  * Adding options to Pods Admin:
-
-     Check out the example filters in __construct(). Be sure to note the complete example that has example callbacks.
-
-  * Adding a new Pods field:
-
-    See the example class. Don't forget to include the file and initialize the class.
-
-
+The "Single item view template" option sets the Pods Template used for individual post pages and the "Archive view template" option sets the Pods Template used for the list of posts in the custom post type. Keep in mind that archives for custom post types must be enabled under the "Advanced Options" tab using the option "Has Archive".
 
 Notes and License
 ==================
 
-This plugin is based on [Base WP Plugin](https://github.com/tareq1988/Base-WP-Plugin) and like Pods and WordPress is licensed under the terms of the GNU General Public License (GPL) version 2.
+This plugin, like Pods and WordPress is licensed under the terms of the GNU General Public License (GPL) version 2.
