@@ -257,6 +257,19 @@ class Omega_Pods {
 		}
 	}
 
+	/**
+	 * Reset the transients for front-end class when Pods are saved.
+	 *
+	 * @TODO What hook does this go on?
+	 *       
+	 * @since 0.0.1
+	 */
+	function reset() {
+		wp_die( 'reset method fired!' );
+		delete_transient( 'pods_omega_the_omega_pods' );
+		delete_transient( 'pods_omega_the_pods' );
+	}
+
 
 
 } // Omega_Pods
