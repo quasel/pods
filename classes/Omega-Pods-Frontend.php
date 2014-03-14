@@ -23,15 +23,24 @@ class Omega_Pods_Frontend {
 	 * @since 0.0.1
 	 */
 	function the_pods() {
-		//start the output
-		$the_pods = array();
-		//get all pods of all post types
-		$all_pods = pods_api()->load_pods();
-		//loop through all pods adding only the post_type pods to the output
-		foreach ( $all_pods as $pod ) {
-			if ( $pod['type'] === 'post_type' ) {
-				$the_pods[] = $pod['name'];
+		//check if we already have the results cached & use it if we can.
+		if ( get_transient( 'pods_omega_the_pods' ) === FALSE ) {
+			//start the output
+			$the_pods = array();
+			//get all pods of all post types
+			$all_pods = pods_api()->load_pods();
+			//loop through all pods adding only the post_type pods to the output
+			foreach ( $all_pods as $pod ) {
+				if ( $pod['type'] === 'post_type' ) {
+					$the_pods[] = $pod['name'];
+				}
 			}
+			//cache the results
+			set_transient( 'pods_omega_the_pods', $the_pods, DAY_IN_SECONDS );
+		}
+		else {
+			//use the cached results
+			$the_pods = get_transient( 'pods_omega_the_pods' );
 		}
 		return $the_pods;
 	}
@@ -44,39 +53,48 @@ class Omega_Pods_Frontend {
 	 * @since 0.0.1
 	 */
 	function the_omega_pods( ) {
-		$the_pods = $this->the_pods();
-		//start return array
-		$the_omega_pods = array();
-		//loop through each to see if omega mode is enabled
-		foreach ( $the_pods as $the_pod ) {
-			$pods = pods_api( $the_pod );
-			//if omega mode is enabled add info about Pod to array
-			if ( isset( $pods->pod_data[ 'options' ][ 'omega_enable' ]) ) {
-				if ( $pods->pod_data[ 'options' ][ 'omega_enable' ] == 1 ) {
-					//check if omega_single and omega_archive are set
-					//if isset add their values to array, else FALSE
-					if ( isset( $pods->pod_data[ 'options' ][ 'omega_single' ] ) ) {
-						$single = $pods->pod_data[ 'options' ][ 'omega_single' ];
+		//check if we already have the results cached & use it if we can.
+		if ( get_transient( 'pods_omega_the_omega_pods' ) === FALSE ) {
+			$the_pods = $this->the_pods();
+			//start return array
+			$the_omega_pods = array();
+			//loop through each to see if omega mode is enabled
+			foreach ( $the_pods as $the_pod ) {
+				$pods = pods_api( $the_pod );
+				//if omega mode is enabled add info about Pod to array
+				if ( isset( $pods->pod_data[ 'options' ][ 'omega_enable' ] ) ) {
+					if ( $pods->pod_data[ 'options' ][ 'omega_enable' ] == 1 ) {
+						//check if omega_single and omega_archive are set
+						//if isset add their values to array, else FALSE
+						if ( isset( $pods->pod_data[ 'options' ][ 'omega_single' ] ) ) {
+							$single = $pods->pod_data[ 'options' ][ 'omega_single' ];
 
-					}
-					else {
-						$single = FALSE;
-					}
-					if ( isset( $pods->pod_data[ 'options' ][ 'omega_archive' ] ) ) {
-						$archive = $pods->pod_data[ 'options' ][ 'omega_archive' ];
-					}
-					else {
-						$archive = FALSE;
-					}
-					//build output array
-					$the_omega_pods[] = array(
-						'name'    => $pods->pod_data[ 'name' ],
-						'single'  => $single,
-						'archive' => $archive,
-					);
-				} //endif
-			} //if isset
-		} //endforeach
+						}
+						else {
+							$single = FALSE;
+						}
+						if ( isset( $pods->pod_data[ 'options' ][ 'omega_archive' ] ) ) {
+							$archive = $pods->pod_data[ 'options' ][ 'omega_archive' ];
+						}
+						else {
+							$archive = FALSE;
+						}
+						//build output array
+						$the_omega_pods[ ] = array(
+							'name'    => $pods->pod_data[ 'name' ],
+							'single'  => $single,
+							'archive' => $archive,
+						);
+					} //endif
+				} //if isset
+			} //endforeach
+			//cache the results
+			set_transient( 'pods_omega_the_omega_pods', $the_omega_pods, DAY_IN_SECONDS );
+		}
+		else {
+			//use the cached results if we can
+			$the_omega_pods = get_transient( 'pods_omega_the_omega_pods' );
+		}
 		return $the_omega_pods;
 	}
 
@@ -140,4 +158,9 @@ class Omega_Pods_Frontend {
 		}
 		return $content;
 	}
+
+
+
+
+
 } 
