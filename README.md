@@ -13,7 +13,7 @@ I the Pods editor, under the "Omega Pods Options" tab, click the "Enable Automat
 
 Two new fields will be revealed: "Single item view template" and "Archive view template." In these fields enter the name of Pods Templates that you wish to use.
 
-The "Single item view template" option sets the Pods Template used for individual post pages and the "Archive view template" option sets the Pods Template used for the list of posts in the custom post type. Keep in mind that archives for custom post types must be enabled under the "Advanced Options" tab using the option "Has Archive".
+The "Single item view template" option sets the Pods Template used for individual post pages and the "Archive view template" option sets the Pods Template used for the list of posts in the custom post type. Keep in mind that archives for custom post types must be enabled under the "Advanced Options" tab using the option "Enable Archive Page".
 
 Notes and License
 ==================
