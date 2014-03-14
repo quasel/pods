@@ -19,17 +19,20 @@ class Omega_Pods_Frontend {
 	/**
 	 * Get all registered custom post types
 	 *
-	 * @todo Figure out how to only get Pods CPTs
-	 * @todo What about extended post types?
-	 *
 	 * @return array All cpts.
 	 * @since 0.0.1
 	 */
 	function the_pods() {
-		$the_pods = get_post_types(array(
-			'_builtin' => false,
-			'public' => true
-		));
+		//start the output
+		$the_pods = array();
+		//get all pods of all post types
+		$all_pods = pods_api()->load_pods();
+		//loop through all pods adding only the post_type pods to the output
+		foreach ( $all_pods as $pod ) {
+			if ( $pod['type'] === 'post_type' ) {
+				$the_pods[] = $pod['name'];
+			}
+		}
 		return $the_pods;
 	}
 
