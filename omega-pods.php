@@ -88,6 +88,8 @@ class Omega_Pods {
 
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array(  $this, 'omega' ) );
+
+		add_action( 'update_option', array( $this, 'reset'), 21, 3 );
 		
 	}
 
@@ -264,10 +266,11 @@ class Omega_Pods {
 	 *       
 	 * @since 0.0.1
 	 */
-	function reset() {
-		wp_die( 'reset method fired!' );
-		delete_transient( 'pods_omega_the_omega_pods' );
-		delete_transient( 'pods_omega_the_pods' );
+	function reset(  $option, $old_value, $value ) {
+		if ( $option === '_transient_pods_flush_rewrites' ) {
+			delete_transient( 'pods_omega_the_omega_pods' );
+			delete_transient( 'pods_omega_the_pods' );
+		}
 	}
 
 
