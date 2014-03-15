@@ -68,16 +68,6 @@ class Omega_Pods {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		/**
-		 * Scripts/ Styles
-		 */
-		// Loads frontend scripts and styles
-		add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
-
-		// Loads admin scripts and styles
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue_scripts' ) );
-
-
-		/**
 		 * These hooks make the Pods Omega Magic Happen
 		 */
 		//Add option tab for post types
@@ -134,58 +124,6 @@ class Omega_Pods {
 	 */
 	public function localization_setup() {
 		load_plugin_textdomain( 'omega-pods', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-	}
-
-	/**
-	 * Enqueue front-end scripts
-	 *
-	 * Allows plugin assets to be loaded.
-	 *
-	 * @since 0.0.1
-	 */
-	public function enqueue_scripts() {
-
-		/**
-		 * All styles goes here
-		 */
-		wp_enqueue_style( 'omega-pods-styles', plugins_url( 'css/front-end.css', __FILE__ ) );
-
-		/**
-		 * All scripts goes here
-		 */
-		wp_enqueue_script( 'omega-pods-scripts', plugins_url( 'js/front-end.js', __FILE__ ), array( ), false, true );
-
-
-		/**
-		 * Example for setting up text strings from Javascript files for localization
-		 *
-		 * Uncomment line below and replace with proper localization variables.
-		 */
-		// $translation_array = array( 'some_string' => __( 'Some string to translate', 'omega-pods' ), 'a_value' => '10' );
-		// wp_localize_script( 'omega-pods-scripts', 'podsExtend', $translation_array ) );
-
-	}
-
-	/**
-	 * Enqueue admin scripts
-	 *
-	 * Allows plugin assets to be loaded.
-	 *
-	 * @since 0.0.1
-	 */
-	public function admin_enqueue_scripts() {
-
-		/**
-		 * All admin styles goes here
-		 */
-		wp_enqueue_style( 'omega-pods-admin-styles', plugins_url( 'css/admin.css', __FILE__ ) );
-
-		/**
-		 * All admin scripts goes here
-		 */
-		wp_enqueue_script( 'omega-pods-admin-scripts', plugins_url( 'js/admin.js', __FILE__ ), array( ), false, true );
-
-
 	}
 
 	/**
