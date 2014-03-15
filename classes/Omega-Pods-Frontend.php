@@ -25,8 +25,12 @@ class Omega_Pods_Frontend {
 	function the_pods() {
 		//start the output
 		$the_pods = array();
+		//params for load_pods
+		$params = array(
+			'type'	=> 'post_type',
+		);
 		//get all pods of all post types
-		$all_pods = pods_api()->load_pods();
+		$all_pods = pods_api()->load_pods( $params );
 		//loop through all pods adding only the post_type pods to the output
 		foreach ( $all_pods as $pod ) {
 			if ( $pod['type'] === 'post_type' ) {
