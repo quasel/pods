@@ -39,6 +39,11 @@ License: GPL v2 or later
 // don't call the file directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
+//add a dev mode for this
+if ( !defined( 'OMEGA_PODS_DEV_MODE') ) {
+	define( 'OMEGA_PODS_DEV_MODE', FALSE );
+}
+
 /**
  * Omega_Pods class
  *
@@ -190,8 +195,16 @@ class Omega_Pods {
 	 * @since 0.0.1
 	 */
 	function omega() {
-		if ( !is_admin() ) {
+		if ( OMEGA_PODS_DEV_MODE === FALSE  ) {
+			if ( !is_admin() ) {
+				include_once( 'classes/Omega-Pods-Frontend.php' );
+				$omega = new Omega_Pods_Frontend();
+				return $omega;
+			}
+		}
+		else {
 			include_once( 'classes/Omega-Pods-Frontend.php' );
+			$this->delete_transients();
 			$omega = new Omega_Pods_Frontend();
 			return $omega;
 		}
@@ -206,10 +219,20 @@ class Omega_Pods {
 	 */
 	function reset(  $option, $old_value, $value ) {
 		if ( $option === '_transient_pods_flush_rewrites' ) {
-			delete_transient( 'pods_omega_the_omega_pods' );
-			delete_transient( 'pods_omega_the_pods' );
+			$this->delete_transients();
 		}
 	}
+
+	/**
+	 * Delete the transients set by this plugin
+	 *
+	 * @since 0.0.1
+	 */
+	function delete_transients() {
+		delete_transient( 'pods_omega_the_omega_pods' );
+		delete_transient( 'pods_omega_the_pods' );
+	}
+
 
 
 
