@@ -24,7 +24,7 @@ class Omega_Pods_Frontend {
 	 */
 	function the_pods() {
 		//check if we already have the results cached & use it if we can.
-		if ( get_transient( 'pods_omega_the_pods' ) === FALSE ) {
+		if ( get_transient( 'pods_omega_the_pods' ) === FALSE && OMEGA_PODS_DEV_MODE === FALSE ) {
 			//start the output
 			$the_pods = array();
 			//get all pods of all post types
@@ -54,7 +54,7 @@ class Omega_Pods_Frontend {
 	 */
 	function the_omega_pods( ) {
 		//check if we already have the results cached & use it if we can.
-		if ( get_transient( 'pods_omega_the_omega_pods' ) === FALSE ) {
+		if ( get_transient( 'pods_omega_the_omega_pods' ) === FALSE && OMEGA_PODS_DEV_MODE === FALSE ) {
 			$the_pods = $this->the_pods();
 			//loop through each to see if omega mode is enabled
 			foreach ( $the_pods as $key => $the_pod ) {
