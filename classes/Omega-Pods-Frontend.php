@@ -32,7 +32,7 @@ class Omega_Pods_Frontend {
 			//loop through all pods adding only the post_type pods to the output
 			foreach ( $all_pods as $pod ) {
 				if ( $pod['type'] === 'post_type' ) {
-					$the_pods[] = $pod['name'];
+					$the_pods[ $pod['name'] ] = $pod['name'];
 				}
 			}
 			//cache the results
@@ -56,10 +56,8 @@ class Omega_Pods_Frontend {
 		//check if we already have the results cached & use it if we can.
 		if ( get_transient( 'pods_omega_the_omega_pods' ) === FALSE ) {
 			$the_pods = $this->the_pods();
-			//start return array
-			$the_omega_pods = array();
 			//loop through each to see if omega mode is enabled
-			foreach ( $the_pods as $the_pod ) {
+			foreach ( $the_pods as $key => $the_pod ) {
 				$pods = pods_api( $the_pod );
 				//if omega mode is enabled add info about Pod to array
 				if ( isset( $pods->pod_data[ 'options' ][ 'omega_enable' ] ) ) {
@@ -82,22 +80,31 @@ class Omega_Pods_Frontend {
 						//set name of pod
 						$name = $pods->pod_data[ 'name' ];
 						//build output array
-						$the_omega_pods[ $name ] = array(
+						$the_pods[ $name ] = array(
 							'name'    => $name,
 							'single'  => $single,
 							'archive' => $archive,
 						);
 					} //endif
+					else {
+						//since omega_enable was set but wasn't enabled, remove from output array
+						unset( $the_pods[ $key ] );
+					}
 				} //if isset
+				else {
+					//since omega_enable was never set, remove from output array
+					$key = key( $the_pod );
+					unset( $the_pods[ $key ] );
+				}
 			} //endforeach
 			//cache the results
-			set_transient( 'pods_omega_the_omega_pods', $the_omega_pods, DAY_IN_SECONDS );
+			set_transient( 'pods_omega_the_omega_pods', $the_pods, DAY_IN_SECONDS );
 		}
 		else {
 			//use the cached results if we can
-			$the_omega_pods = get_transient( 'pods_omega_the_omega_pods' );
+			$the_pods = get_transient( 'pods_omega_the_omega_pods' );
 		}
-		return $the_omega_pods;
+		return $the_pods;
 	}
 
 	/**
