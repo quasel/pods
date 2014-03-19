@@ -129,6 +129,8 @@ class Omega_Pods_Frontend {
 		if (array_key_exists( $current_post_type, $omegas ) ) {
 			//build Pods object for current item
 			$pods = pods( $current_post_type, $post->ID );
+			//get array for the current post type
+			$omega = $omegas[ $current_post_type ];
 			//if omega_single was set try to use that template
 			if ( $omega[ 'single' ] !== FALSE ) {
 				//check if we are on a single post of the post type
@@ -143,7 +145,7 @@ class Omega_Pods_Frontend {
 				}
 			}
 			//if omega_archive was set try to use that template
-			if ( $omega[ 'archive' ] !== FALSE ) {
+			if ( $omega[ $current_post_type ][ 'archive' ] !== FALSE ) {
 				//check if we are on an archive of the post type
 				if ( is_post_type_archive( $current_post_type ) ) {
 					//get the template
@@ -156,8 +158,6 @@ class Omega_Pods_Frontend {
 				}
 			}
 		}
-
-
 		return $content;
 	}
 
