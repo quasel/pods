@@ -78,6 +78,8 @@ class Omega_Pods {
 
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array(  $this, 'omega' ) );
+
+		add_action( 'update_option', array( $this, 'reset'), 21, 3 );
 		
 	}
 
@@ -192,6 +194,20 @@ class Omega_Pods {
 			include_once( 'classes/Omega-Pods-Frontend.php' );
 			$omega = new Omega_Pods_Frontend();
 			return $omega;
+		}
+	}
+
+	/**
+	 * Reset the transients for front-end class when Pods are saved.
+	 *
+	 * @TODO What hook does this go on?
+	 *       
+	 * @since 0.0.1
+	 */
+	function reset(  $option, $old_value, $value ) {
+		if ( $option === '_transient_pods_flush_rewrites' ) {
+			delete_transient( 'pods_omega_the_omega_pods' );
+			delete_transient( 'pods_omega_the_pods' );
 		}
 	}
 
