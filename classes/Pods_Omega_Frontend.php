@@ -1,11 +1,11 @@
 <?php
 /**
- * @TODO What this does.
+ * Front-end functionality for this plugin.
  *
- * @package   @TODO
+ * @package   @Pods_Omega
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
- * @link
+ * @link	  http://Pods.io
  * @copyright 2014 Josh Pollock
  */
 class Pods_Omega_Frontend {

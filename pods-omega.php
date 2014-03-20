@@ -86,6 +86,7 @@ class Pods_Omega {
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array( $this, 'omega' ) );
 
+		//Delete transients when Pods settings are updated.
 		add_action( 'update_option', array( $this, 'reset' ), 21, 3 );
 
 	}
@@ -223,7 +224,7 @@ class Pods_Omega {
 	/**
 	 * Reset the transients for front-end class when Pods are saved.
 	 *
-	 * @TODO What hook does this go on? (update_option)
+	 * @uses update_option hook
 	 *
 	 * @param string $option
 	 * @param mixed $old_value
