@@ -33,7 +33,7 @@ class Pods_Omega_Frontend {
 			$the_pods = pods_api()->load_pods( array( 'type' => 'post_type', 'names' => true ) );
 
 			//cache the results
-			set_transient( 'pods_omega_the_pods', $the_pods, DAY_IN_SECONDS );
+			set_transient( 'pods_omega_the_pods', $the_pods, PODS_OMEGA_TRANSIENT_EXPIRE );
 		}
 
 		return $the_pods;
@@ -79,7 +79,7 @@ class Pods_Omega_Frontend {
 			} //endforeach
 
 			//cache the results
-			set_transient( 'pods_omega_the_pods_omega', $the_pods, DAY_IN_SECONDS );
+			set_transient( 'pods_omega_the_pods_omega', $the_pods, PODS_OMEGA_TRANSIENT_EXPIRE );
 		}
 
 		return $the_pods;

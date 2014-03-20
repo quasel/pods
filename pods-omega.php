@@ -46,6 +46,11 @@ if ( !defined( 'PODS_OMEGA_DEV_MODE' ) ) {
 	define( 'PODS_OMEGA_DEV_MODE', false );
 }
 
+//constant for the transient expiration time
+if ( !defined( 'PODS_OMEGA_TRANSIENT_EXPIRE' ) ) {
+	define( 'PODS_OMEGA_TRANSIENT_EXPIRE', DAY_IN_SECONDS );
+}
+
 /**
  * Pods_Omega class
  *
