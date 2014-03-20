@@ -1,17 +1,17 @@
 <?php
 /*
-Plugin Name: Omega Pods
+Plugin Name: Pods Omega
 Plugin URI: http://pods.io
 Description: Creates automatic output of Pods custom post types via Pods Templates.
 Version: 0.0.1
 Author: Pods Framework Team
 Author URI: http://pods.io/about/
-Text Domain: omega-pods
+Text Domain: pods-omega
 License: GPL v2 or later
 */
 
 /**
- * Copyright (c) YEAR Your Name (email: Email). All rights reserved.
+ * Copyright (c) 2014 Josh Pollock (email: Josh@JoshPress.net). All rights reserved.
  *
  * Released under the GPL license
  * http://www.opensource.org/licenses/gpl-license.php
@@ -37,24 +37,26 @@ License: GPL v2 or later
  */
 
 // don't call the file directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if ( !defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 //add a dev mode for this
-if ( !defined( 'OMEGA_PODS_DEV_MODE') ) {
-	define( 'OMEGA_PODS_DEV_MODE', FALSE );
+if ( !defined( 'PODS_OMEGA_DEV_MODE' ) ) {
+	define( 'PODS_OMEGA_DEV_MODE', false );
 }
 
 /**
- * Omega_Pods class
+ * Pods_Omega class
  *
- * @class Omega_Pods The class that holds the entire Omega_Pods plugin
+ * @class Pods_Omega The class that holds the entire Pods_Omega plugin
  *
  * @since 0.0.1
  */
-class Omega_Pods {
+class Pods_Omega {
 
 	/**
-	 * Constructor for the Omega_Pods class
+	 * Constructor for the Pods_Omega class
 	 *
 	 * Sets up all the appropriate hooks and actions
 	 * within the plugin.
@@ -82,28 +84,30 @@ class Omega_Pods {
 		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'omega_options' ), 12, 2 );
 
 		//Include and init front-end class
-		add_action( 'plugins_loaded', array(  $this, 'omega' ) );
+		add_action( 'plugins_loaded', array( $this, 'omega' ) );
 
-		add_action( 'update_option', array( $this, 'reset'), 21, 3 );
-		
+		add_action( 'update_option', array( $this, 'reset' ), 21, 3 );
+
 	}
 
 	/**
-	 * Initializes the Omega_Pods() class
+	 * Initializes the Pods_Omega() class
 	 *
-	 * Checks for an existing Omega_Pods() instance
+	 * Checks for an existing Pods_Omega() instance
 	 * and if it doesn't find one, creates it.
 	 *
 	 * @since 0.0.1
 	 */
 	public static function init() {
+
 		static $instance = false;
 
-		if ( ! $instance ) {
-			$instance = new Omega_Pods();
+		if ( !$instance ) {
+			$instance = new Pods_Omega();
 		}
 
 		return $instance;
+
 	}
 
 	/**
@@ -130,97 +134,109 @@ class Omega_Pods {
 	 * @since 0.0.1
 	 */
 	public function localization_setup() {
-		load_plugin_textdomain( 'omega-pods', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
+		load_plugin_textdomain( 'pods-omega', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
 	}
 
 	/**
 	 * Add an Omega Pods option tab.
 	 *
-	 * @param $tabs
-	 * @param $pod
-	 * @param $addtl_args
+	 * @param array $tabs
+	 * @param array $pod
+	 * @param array $addtl_args
 	 *
-	 * @return mixed
+	 * @return array
 	 *
 	 * @since 0.0.1
 	 */
 	function omega_tab( $tabs, $pod, $addtl_args ) {
-		$tabs[ 'omega-pods' ] = __( 'Omega Pods Options', 'omega-pods' );
+
+		$tabs[ 'pods-omega' ] = __( 'Pods Omega Options', 'pods-omega' );
+
 		return $tabs;
+
 	}
 
 	/**
 	 * Adds options for this plugin under the omega tab.
 	 *
-	 * @param $options
-	 * @param $pod
+	 * @param array $options
+	 * @param array $pod
 	 *
-	 * @return mixed
+	 * @return array
 	 *
 	 * @since 0.0.1
 	 */
-	function omega_options( $options, $pod  ) {
-		$options[ 'omega-pods' ] = array(
+	function omega_options( $options, $pod ) {
+
+		$options[ 'pods-omega' ] = array(
 			'omega_enable' => array(
-				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods' ),
-				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods' ),
+				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-omega' ),
+				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods-omega' ),
 				'type' => 'boolean',
 				'default' => false,
 				'dependency' => true,
 				'boolean_yes_label' => ''
 			),
 			'omega_single' => array(
-				'label' => __( 'Single item view template', 'pods' ),
-				'help' => __( 'Name of Pods template to use for single item view', 'pods' ),
+				'label' => __( 'Single item view template', 'pods-omega' ),
+				'help' => __( 'Name of Pods template to use for single item view', 'pods-omega' ),
 				'type' => 'text',
 				'default' => false,
 				'depends-on' => array( 'omega_enable' => true )
 			),
 			'omega_archive' => array(
-				'label' => __( 'Archive view template', 'pods' ),
-				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods' ),
+				'label' => __( 'Archive view template', 'pods-omega' ),
+				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-omega' ),
 				'type' => 'text',
 				'default' => false,
 				'depends-on' => array( 'omega_enable' => true )
 			),
 		);
+
 		return $options;
+
 	}
 
 	/**
 	 * Include/ init the front end class on the front end only
 	 *
-	 * @return Omega_Pods_Frontend
+	 * @return Pods_Omega_Frontend
 	 *
 	 * @since 0.0.1
 	 */
 	function omega() {
-		if ( OMEGA_PODS_DEV_MODE === FALSE  ) {
-			if ( !is_admin() ) {
-				include_once( 'classes/Omega-Pods-Frontend.php' );
-				$omega = new Omega_Pods_Frontend();
-				return $omega;
-			}
-		}
-		else {
-			include_once( 'classes/Omega-Pods-Frontend.php' );
+
+		if ( PODS_OMEGA_DEV_MODE ) {
 			$this->delete_transients();
-			$omega = new Omega_Pods_Frontend();
-			return $omega;
 		}
+
+		if ( !is_admin() ) {
+			include_once( 'classes/Pods_Omega_Frontend.php' );
+
+			$GLOBALS[ 'Pods_Omega_Frontend' ] = new Pods_Omega_Frontend();
+		}
+
 	}
 
 	/**
 	 * Reset the transients for front-end class when Pods are saved.
 	 *
-	 * @TODO What hook does this go on?
-	 *       
+	 * @TODO What hook does this go on? (update_option)
+	 *
+	 * @param string $option
+	 * @param mixed $old_value
+	 * @param mixed $value
+	 *
 	 * @since 0.0.1
 	 */
-	function reset(  $option, $old_value, $value ) {
+	function reset( $option, $old_value, $value ) {
+
 		if ( $option === '_transient_pods_flush_rewrites' ) {
 			$this->delete_transients();
 		}
+
 	}
 
 	/**
@@ -229,13 +245,12 @@ class Omega_Pods {
 	 * @since 0.0.1
 	 */
 	function delete_transients() {
-		delete_transient( 'pods_omega_the_omega_pods' );
+
+		delete_transient( 'pods_omega_the_pods_omega' );
 		delete_transient( 'pods_omega_the_pods' );
+
 	}
 
+} // Pods_Omega
 
-
-
-} // Omega_Pods
-
-$pods_extend = Omega_Pods::init();
+$GLOBALS[ 'Pods_Omega' ] = Pods_Omega::init();
