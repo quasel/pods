@@ -140,7 +140,9 @@ class Pods_PFAT_Frontend {
 			$current_post_type = get_post_type( $post->ID );
 
 			//if $current_post_type is false then set it to post
-			$current_post_type = 'post';
+			if ( $current_post_type === false ) {
+				$current_post_type = 'post';
+			}
 
 			//also set $taxonomy false
 			$taxonomy = false;
@@ -173,6 +175,12 @@ class Pods_PFAT_Frontend {
 			if ( $this_pod[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
 					//append the template
 					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
+
+			}
+			//if pfat_archive was set and we're in the blog index, try to append template
+			if ( is_home() && $this_pod[ 'archive' ] && $current_post_type === 'post'  ) {
+				//append the template
+				$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
 
 			}
 
