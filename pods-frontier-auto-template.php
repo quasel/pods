@@ -80,13 +80,16 @@ class Pods_PFAT {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		/**
-		 * These hooks make the Auto Template Magic Happen
+		 * The next four hooks make the Auto Template Magic Happen
 		 */
 		//Add option tab for post types
 		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'tab' ), 11, 3 );
 
-		//Add options to that tab
-		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'options' ), 12, 2 );
+		//add the same tab for taxonomies
+		add_filter( 'pods_admin_setup_edit_tabs_taxonomy', array( $this, 'tab' ), 11, 3 );
+
+		//Add options to the new tab
+		add_filter( 'pods_admin_setup_edit_options', array( $this, 'options' ), 12, 2 );
 
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array( $this, 'front_end' ) );
@@ -146,7 +149,7 @@ class Pods_PFAT {
 	}
 
 	/**
-	 * Add an Frontier Auto Display option tab.
+	 * The Frontier Auto Display option tab.
 	 *
 	 * @param array $tabs
 	 * @param array $pod
