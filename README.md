@@ -1,4 +1,4 @@
- Omega Pods
+Pods Frontier Auto Display
 ===========
 
 Automatic Pods Template output for Pods custom post types.
@@ -9,7 +9,7 @@ Requires Pods 2.3.18 or later.
 
 Instructions
 ============
-I the Pods editor, under the "Omega Pods Options" tab, click the "Enable Automatic Pods Templates for this Pod?" option.
+I the Pods editor, under the "Frontier Auto Display Options" tab, click the "Enable Automatic Pods Templates for this Pod?" option.
 
 Two new fields will be revealed: "Single item view template" and "Archive view template." In these fields enter the name of Pods Templates that you wish to use.
 

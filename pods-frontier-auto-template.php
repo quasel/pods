@@ -1,12 +1,12 @@
 <?php
 /*
-Plugin Name: Pods Omega
+Plugin Name: Pods Frontier Auto Template
 Plugin URI: http://pods.io
 Description: Creates automatic output of Pods custom post types via Pods Templates.
 Version: 0.0.1
 Author: Pods Framework Team
 Author URI: http://pods.io/about/
-Text Domain: pods-omega
+Text Domain: pods-pfat
 License: GPL v2 or later
 */
 
@@ -42,13 +42,13 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 //add a dev mode for this
-if ( !defined( 'PODS_OMEGA_DEV_MODE' ) ) {
-	define( 'PODS_OMEGA_DEV_MODE', false );
+if ( !defined( 'PODS_PFAD_DEV_MODE' ) ) {
+	define( 'PODS_PFAD_DEV_MODE', false );
 }
 
 //constant for the transient expiration time
-if ( !defined( 'PODS_OMEGA_TRANSIENT_EXPIRE' ) ) {
-	define( 'PODS_OMEGA_TRANSIENT_EXPIRE', DAY_IN_SECONDS );
+if ( !defined( 'PODS_PFAT_TRANSIENT_EXPIRE' ) ) {
+	define( 'PODS_PFAT_TRANSIENT_EXPIRE', DAY_IN_SECONDS );
 }
 
 /**
@@ -58,7 +58,7 @@ if ( !defined( 'PODS_OMEGA_TRANSIENT_EXPIRE' ) ) {
  *
  * @since 0.0.1
  */
-class Pods_Omega {
+class Pods_PFAT {
 
 	/**
 	 * Constructor for the Pods_Omega class
@@ -83,13 +83,13 @@ class Pods_Omega {
 		 * These hooks make the Pods Omega Magic Happen
 		 */
 		//Add option tab for post types
-		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'omega_tab' ), 11, 3 );
+		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'tab' ), 11, 3 );
 
 		//Add options to that tab
-		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'omega_options' ), 12, 2 );
+		add_filter( 'pods_admin_setup_edit_options_post_type', array( $this, 'options' ), 12, 2 );
 
 		//Include and init front-end class
-		add_action( 'plugins_loaded', array( $this, 'omega' ) );
+		add_action( 'plugins_loaded', array( $this, 'front_end' ) );
 
 		//Delete transients when Pods settings are updated.
 		add_action( 'update_option', array( $this, 'reset' ), 21, 3 );
@@ -109,7 +109,7 @@ class Pods_Omega {
 		static $instance = false;
 
 		if ( !$instance ) {
-			$instance = new Pods_Omega();
+			$instance = new Pods_PFAT();
 		}
 
 		return $instance;
@@ -141,12 +141,12 @@ class Pods_Omega {
 	 */
 	public function localization_setup() {
 
-		load_plugin_textdomain( 'pods-omega', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'pods-pfat', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 	}
 
 	/**
-	 * Add an Omega Pods option tab.
+	 * Add an Frontier Auto Display option tab.
 	 *
 	 * @param array $tabs
 	 * @param array $pod
@@ -156,16 +156,16 @@ class Pods_Omega {
 	 *
 	 * @since 0.0.1
 	 */
-	function omega_tab( $tabs, $pod, $addtl_args ) {
+	function tab( $tabs, $pod, $addtl_args ) {
 
-		$tabs[ 'pods-omega' ] = __( 'Pods Omega Options', 'pods-omega' );
+		$tabs[ 'pods-pfat' ] = __( 'Frontier Auto Display Options', 'pods-pfat' );
 
 		return $tabs;
 
 	}
 
 	/**
-	 * Adds options for this plugin under the omega tab.
+	 * Adds options for this plugin under the Frontier Auto Template tab.
 	 *
 	 * @param array $options
 	 * @param array $pod
@@ -174,30 +174,30 @@ class Pods_Omega {
 	 *
 	 * @since 0.0.1
 	 */
-	function omega_options( $options, $pod ) {
+	function options( $options, $pod ) {
 
-		$options[ 'pods-omega' ] = array(
-			'omega_enable' => array(
-				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-omega' ),
-				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods-omega' ),
+		$options[ 'pods-pfat' ] = array(
+			'pfat_enable' => array(
+				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
+				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
 				'type' => 'boolean',
 				'default' => false,
 				'dependency' => true,
 				'boolean_yes_label' => ''
 			),
-			'omega_single' => array(
-				'label' => __( 'Single item view template', 'pods-omega' ),
-				'help' => __( 'Name of Pods template to use for single item view', 'pods-omega' ),
+			'pfat_single' => array(
+				'label' => __( 'Single item view template', 'pods-pfat' ),
+				'help' => __( 'Name of Pods template to use for single item view', 'pods-pfat' ),
 				'type' => 'text',
 				'default' => false,
-				'depends-on' => array( 'omega_enable' => true )
+				'depends-on' => array( 'pfat_enable' => true )
 			),
-			'omega_archive' => array(
-				'label' => __( 'Archive view template', 'pods-omega' ),
-				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-omega' ),
+			'pfat_archive' => array(
+				'label' => __( 'Archive view template', 'pods-pfat' ),
+				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-pfat' ),
 				'type' => 'text',
 				'default' => false,
-				'depends-on' => array( 'omega_enable' => true )
+				'depends-on' => array( 'pfat_enable' => true )
 			),
 		);
 
@@ -208,20 +208,20 @@ class Pods_Omega {
 	/**
 	 * Include/ init the front end class on the front end only
 	 *
-	 * @return Pods_Omega_Frontend
+	 * @return Pods_PFAT_Frontend
 	 *
 	 * @since 0.0.1
 	 */
-	function omega() {
+	function front_end() {
 
-		if ( PODS_OMEGA_DEV_MODE ) {
+		if ( PODS_PFAD_DEV_MODE ) {
 			$this->delete_transients();
 		}
 
 		if ( !is_admin() ) {
-			include_once( 'classes/Pods_Omega_Frontend.php' );
+			include_once( 'classes/front-end.php' );
 
-			$GLOBALS[ 'Pods_Omega_Frontend' ] = new Pods_Omega_Frontend();
+			$GLOBALS[ 'Pods_PFAT_Frontend' ] = new Pods_PFAT_Frontend();
 		}
 
 	}
@@ -252,11 +252,11 @@ class Pods_Omega {
 	 */
 	function delete_transients() {
 
-		delete_transient( 'pods_omega_the_pods_omega' );
-		delete_transient( 'pods_omega_the_pods' );
+		delete_transient( 'pods_pfat_pods' );
+		delete_transient( 'pods_pfat_the_pods' );
 
 	}
 
 } // Pods_Omega
 
-$GLOBALS[ 'Pods_Omega' ] = Pods_Omega::init();
+$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();

@@ -2,13 +2,13 @@
 /**
  * Front-end functionality for this plugin.
  *
- * @package   @Pods_Omega
+ * @package   @Pods_PFAT
  * @author    Josh Pollock <Josh@JoshPress.net>
  * @license   GPL-2.0+
  * @link	  http://Pods.io
  * @copyright 2014 Josh Pollock
  */
-class Pods_Omega_Frontend {
+class Pods_PFAT_Frontend {
 
 	function __construct() {
 
@@ -25,15 +25,15 @@ class Pods_Omega_Frontend {
 	function the_pods() {
 
 		//use the cached results
-		$the_pods = get_transient( 'pods_omega_the_pods' );
+		$the_pods = get_transient( 'pods_pfat_the_pods' );
 
 		//check if we already have the results cached & use it if we can.
-		if ( false === $the_pods || PODS_OMEGA_DEV_MODE ) {
+		if ( false === $the_pods || PODS_PFAD_DEV_MODE ) {
 			//get all pods of all post types
 			$the_pods = pods_api()->load_pods( array( 'type' => 'post_type', 'names' => true ) );
 
 			//cache the results
-			set_transient( 'pods_omega_the_pods', $the_pods, PODS_OMEGA_TRANSIENT_EXPIRE );
+			set_transient( 'pods_pfat_the_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
 		}
 
 		return $the_pods;
@@ -47,13 +47,13 @@ class Pods_Omega_Frontend {
 	 *
 	 * @since 0.0.1
 	 */
-	function the_pods_omega() {
+	function pods_pfat_pods() {
 
 		//use the cached results if we can
-		$the_pods = get_transient( 'pods_omega_the_pods_omega' );
+		$the_pods = get_transient( 'pods_pfat_pods' );
 
 		//check if we already have the results cached & use it if we can.
-		if ( false === $the_pods || PODS_OMEGA_DEV_MODE ) {
+		if ( false === $the_pods || PODS_PFAD_DEV_MODE ) {
 			//get all pods of all post types
 			$all_pods = pods_api()->load_pods( array( 'type' => 'post_type', 'names' => true ) );
 
@@ -64,10 +64,10 @@ class Pods_Omega_Frontend {
 				$pods = pods_api( $the_pod );
 
 				//if omega mode is enabled add info about Pod to array
-				if ( 1 == pods_v( 'omega_enable', $pods->pod_data[ 'options' ] ) ) {
-					//check if omega_single and omega_archive are set
-					$single = pods_v( 'omega_single', $pods->pod_data[ 'options' ], false, true );
-					$archive = pods_v( 'omega_archive', $pods->pod_data[ 'options' ], false, true );
+				if ( 1 == pods_v( 'pfat_enable', $pods->pod_data[ 'options' ] ) ) {
+					//check if pfat_single and pfat_archive are set
+					$single = pods_v( 'pfat_single', $pods->pod_data[ 'options' ], false, true );
+					$archive = pods_v( 'pfat_archive', $pods->pod_data[ 'options' ], false, true );
 
 					//build output array
 					$the_pods[ $the_pod ] = array(
@@ -79,7 +79,7 @@ class Pods_Omega_Frontend {
 			} //endforeach
 
 			//cache the results
-			set_transient( 'pods_omega_the_pods_omega', $the_pods, PODS_OMEGA_TRANSIENT_EXPIRE );
+			set_transient( 'pods_pfat_pfat_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
 		}
 
 		return $the_pods;
@@ -103,7 +103,7 @@ class Pods_Omega_Frontend {
 		global $post;
 
 		//first use other methods in class to build array to search in/ use
-		$omegas = $this->the_pods_omega();
+		$omegas = $this->pods_pfat_pods();
 
 		//get current post's post type
 		$current_post_type = get_post_type( $post->ID );
@@ -116,7 +116,7 @@ class Pods_Omega_Frontend {
 			//get array for the current post type
 			$omega = $omegas[ $current_post_type ];
 
-			//if omega_single was set try to use that template
+			//if pfat_single was set try to use that template
 			//check if we are on a single post of the post type
 			if ( $omega[ 'single' ] && is_singular( $current_post_type ) ) {
 				//get the template
@@ -128,7 +128,7 @@ class Pods_Omega_Frontend {
 					$content = $content . $template;
 				}
 			}
-			//if omega_archive was set try to use that template
+			//if pfat_archive was set try to use that template
 			//check if we are on an archive of the post type
 			elseif ( $omega[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
 				//get the template
