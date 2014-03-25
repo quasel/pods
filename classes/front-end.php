@@ -131,12 +131,17 @@ class Pods_PFAT_Frontend {
 		if ( isset( $wp_query->query_vars[ 'taxonomy'] ) ) {
 			//if so, but current taxonomy name in a variable
 			$taxonomy = $wp_query->query_vars[ 'taxonomy'];
+
 			//and set $current_post_type to the name of the current taxonomy
 			$current_post_type = $taxonomy;
 		}
 		else {
 			//get set to current post's post type
 			$current_post_type = get_post_type( $post->ID );
+
+			//if $current_post_type is false then set it to post
+			$current_post_type = 'post';
+
 			//also set $taxonomy false
 			$taxonomy = false;
 		}
@@ -162,7 +167,6 @@ class Pods_PFAT_Frontend {
 						$content = $content . $template;
 					}
 				}
-
 
 			}
 			else {
