@@ -157,51 +157,50 @@ class Pods_PFAT_Frontend {
 			//if is taxonomy archive of the selected taxonomy
 			if ( is_tax( $taxonomy )  ) {
 				//if pfat_single was set try to use that template
-				if ( $this_pod[ 'single' ]  ) {
-					//get the template
-					$template = $pods->template( $this_pod[ 'single' ] );
-
-					//check if we got a valid template
-					if ( !is_null( $template ) ) {
-						//if so append to the content
-						$content = $content . $template;
-					}
+				if ( $this_pod[ 'single' ] ) {
+					//append the template
+					$content = $this->load_template( $this_pod[ 'single' ], $content , $pods );
 				}
 
 			}
-			else {
-				//if pfat_single was set try to use that template
-				//check if we are on a single post of the post type
-				if ( $this_pod[ 'single' ] && is_singular( $current_post_type ) ) {
-					//get the template
-					$template = $pods->template( $this_pod[ 'single' ] );
+			if ( $this_pod[ 'single' ] && is_singular( $current_post_type ) ) {
+					//append the template
+					$content = $this->load_template( $this_pod[ 'single' ], $content , $pods );
 
-					//check if we got a valid template
-					if ( !is_null( $template ) ) {
-						//if so append to the content
-						$content = $content . $template;
-					}
-
-				}
-				//if pfat_archive was set try to use that template
-				//check if we are on an archive of the post type
-				elseif ( $this_pod[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
-					//get the template
-					$template = $pods->template( $this_pod[ 'archive' ] );
-
-					//check if we got a valid template
-					if ( !is_null( $template ) ) {
-						//if so append to the content
-						$content = $content . $template;
-					}
-				}
+			}
+			//if pfat_archive was set try to use that template
+			//check if we are on an archive of the post type
+			if ( $this_pod[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
+					//append the template
+					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
 
 			}
 
 		}
-		//$content = Print_r2( $current_post_type );
+
 		return $content;
 
+	}
+
+	/**
+	 * Atatch Pods Template to $content
+	 *
+	 * @param string $template_name The name of a Pods Template to load.
+	 *
+	 * @return string $content with Pods Template appended if template exists
+	 *
+	 * @since 0.0.1
+	 */
+	function load_template( $template_name, $content, $pods  ) {
+		//get the template
+		$template = $pods->template( $template_name );
+
+		//check if we got a valid template
+		if ( !is_null( $template ) ) {
+			$content = $content . $template;
+		}
+
+		return $content;
 	}
 
 }
