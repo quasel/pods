@@ -42,8 +42,8 @@ if ( !defined( 'ABSPATH' ) ) {
 }
 
 //add a dev mode for this
-if ( !defined( 'PODS_PFAD_DEV_MODE' ) ) {
-	define( 'PODS_PFAD_DEV_MODE', false );
+if ( !defined( 'PODS_PFAT_DEV_MODE' ) ) {
+	define( 'PODS_PFAT_DEV_MODE', false );
 }
 
 //constant for the transient expiration time
@@ -92,7 +92,7 @@ class Pods_PFAT {
 		add_filter( 'pods_admin_setup_edit_options', array( $this, 'options' ), 12, 2 );
 
 		//end the magic//
-		
+
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array( $this, 'front_end' ) );
 
@@ -244,7 +244,7 @@ class Pods_PFAT {
 	 */
 	function front_end() {
 
-		if ( PODS_PFAD_DEV_MODE ) {
+		if ( PODS_PFAT_DEV_MODE ) {
 			$this->delete_transients();
 		}
 
@@ -282,7 +282,7 @@ class Pods_PFAT {
 	 */
 	function delete_transients() {
 
-		delete_transient( 'pods_pfat_pods' );
+		delete_transient( 'pods_pfat_the_pods' );
 		delete_transient( 'pods_pfat_auto_pods' );
 
 	}
