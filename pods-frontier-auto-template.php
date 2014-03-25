@@ -80,7 +80,7 @@ class Pods_PFAT {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		/**
-		 * The next four hooks make the Auto Template Magic Happen
+		 * The next three hooks make the Auto Template Magic Happen
 		 */
 		//Add option tab for post types
 		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'tab' ), 11, 3 );
@@ -91,6 +91,8 @@ class Pods_PFAT {
 		//Add options to the new tab
 		add_filter( 'pods_admin_setup_edit_options', array( $this, 'options' ), 12, 2 );
 
+		//end the magic//
+		
 		//Include and init front-end class
 		add_action( 'plugins_loaded', array( $this, 'front_end' ) );
 
@@ -178,31 +180,56 @@ class Pods_PFAT {
 	 * @since 0.0.1
 	 */
 	function options( $options, $pod ) {
+		//check if it's a post type pod and add fields for that.
+		if ( $pod['type'] === 'post_type' )  {
+			$options[ 'pods-pfat' ] = array (
+				'pfat_enable'  => array (
+					'label'             => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
+					'help'              => __( 'When enabled you can specify the names of Pods Templates to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
+					'type'              => 'boolean',
+					'default'           => FALSE,
+					'dependency'        => TRUE,
+					'boolean_yes_label' => ''
+				),
+				'pfat_single'  => array (
+					'label'      => __( 'Single item view template', 'pods-pfat' ),
+					'help'       => __( 'Name of Pods template to use for single item view.', 'pods-pfat' ),
+					'type'       => 'text',
+					'default'    => FALSE,
+					'depends-on' => array ( 'pfat_enable' => TRUE )
+				),
+				'pfat_archive' => array (
+					'label'      => __( 'Archive view template', 'pods-pfat' ),
+					'help'       => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-pfat' ),
+					'type'       => 'text',
+					'default'    => FALSE,
+					'depends-on' => array ( 'pfat_enable' => TRUE )
+				),
+			);
+		}
 
-		$options[ 'pods-pfat' ] = array(
-			'pfat_enable' => array(
-				'label' => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
-				'help' => __( 'When enabled you can specify the names of Pods templates to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
-				'type' => 'boolean',
-				'default' => false,
-				'dependency' => true,
-				'boolean_yes_label' => ''
-			),
-			'pfat_single' => array(
-				'label' => __( 'Single item view template', 'pods-pfat' ),
-				'help' => __( 'Name of Pods template to use for single item view', 'pods-pfat' ),
-				'type' => 'text',
-				'default' => false,
-				'depends-on' => array( 'pfat_enable' => true )
-			),
-			'pfat_archive' => array(
-				'label' => __( 'Archive view template', 'pods-pfat' ),
-				'help' => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-pfat' ),
-				'type' => 'text',
-				'default' => false,
-				'depends-on' => array( 'pfat_enable' => true )
-			),
-		);
+		//check if it's a taxonomy Pod, if so add fields for that
+		if ( $pod['type'] === 'taxonomy' ) {
+			$options[ 'pods-pfat' ] = array (
+				'pfat_enable'  => array (
+					'label'             => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
+					'help'              => __( 'When enabled you can specify the names of a Pods Template to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
+					'type'              => 'boolean',
+					'default'           => FALSE,
+					'dependency'        => TRUE,
+					'boolean_yes_label' => ''
+				),
+				'pfat_single'  => array (
+					'label'      => __( 'Taxonomy Template', 'pods-pfat' ),
+					'help'       => __( 'Name of Pods template to use for this taxonomy.', 'pods-pfat' ),
+					'type'       => 'text',
+					'default'    => FALSE,
+					'depends-on' => array ( 'pfat_enable' => TRUE )
+				),
+			);
+		}
+
+		//BTW if it's neither, no options added, Tab wouldn't be there anyway.
 
 		return $options;
 
