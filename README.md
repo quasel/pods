@@ -1,7 +1,9 @@
 Pods Frontier Auto Display
 ===========
 
-Automatic Pods Template output for Pods custom post types.
+Automatic front-end output of Pods Templates.
+
+Supports custom post types, Pods extended posts and pages, as well as custom taxonomies.
 
 NOTE: This plugin is still in its first beta. Use with caution and report all issues. Pull requests are welcome.
 

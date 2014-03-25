@@ -2,7 +2,7 @@
 /*
 Plugin Name: Pods Frontier Auto Template
 Plugin URI: http://pods.io
-Description: Creates automatic output of Pods custom post types via Pods Templates.
+Description: Automatic front-end output of Pods Templates.
 Version: 0.0.1
 Author: Pods Framework Team
 Author URI: http://pods.io/about/
