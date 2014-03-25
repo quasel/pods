@@ -41,13 +41,13 @@ class Pods_PFAT_Frontend {
 	}
 
 	/**
-	 * Get all Pods with omega mode enabled
+	 * Get all Pods with auto template enable and its settings
 	 *
-	 * @return array Info about each Pod with omega mode enabled.
+	 * @return array With info about auto template settings per post type
 	 *
 	 * @since 0.0.1
 	 */
-	function pods_pfat_pods() {
+	function auto_pods() {
 
 		//use the cached results if we can
 		$the_pods = get_transient( 'pods_pfat_pods' );
@@ -79,7 +79,7 @@ class Pods_PFAT_Frontend {
 			} //endforeach
 
 			//cache the results
-			set_transient( 'pods_pfat_pfat_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
+			set_transient( 'pods_pfat_auto_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
 		}
 
 		return $the_pods;
@@ -103,7 +103,7 @@ class Pods_PFAT_Frontend {
 		global $post;
 
 		//first use other methods in class to build array to search in/ use
-		$omegas = $this->pods_pfat_pods();
+		$omegas = $this->auto_pods();
 
 		//get current post's post type
 		$current_post_type = get_post_type( $post->ID );

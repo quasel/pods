@@ -80,7 +80,7 @@ class Pods_PFAT {
 		add_action( 'init', array( $this, 'localization_setup' ) );
 
 		/**
-		 * These hooks make the Pods Omega Magic Happen
+		 * These hooks make the Auto Template Magic Happen
 		 */
 		//Add option tab for post types
 		add_filter( 'pods_admin_setup_edit_tabs_post_type', array( $this, 'tab' ), 11, 3 );
@@ -97,7 +97,7 @@ class Pods_PFAT {
 	}
 
 	/**
-	 * Initializes the Pods_Omega() class
+	 * Initializes the Pods_PFAT() class
 	 *
 	 * Checks for an existing Pods_Omega() instance
 	 * and if it doesn't find one, creates it.
@@ -253,7 +253,7 @@ class Pods_PFAT {
 	function delete_transients() {
 
 		delete_transient( 'pods_pfat_pods' );
-		delete_transient( 'pods_pfat_the_pods' );
+		delete_transient( 'pods_pfat_auto_pods' );
 
 	}
 
