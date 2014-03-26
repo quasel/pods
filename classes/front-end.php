@@ -8,6 +8,14 @@
  * @link	  http://Pods.io
  * @copyright 2014 Josh Pollock
  */
+
+/**
+ * Pods_PFAT_Frontend class
+ *
+ * @class Pods_PFAT_Frontend The class that handles the output in the front-end of the templates.
+ *
+ * @since 0.0.1
+ */
 class Pods_PFAT_Frontend {
 
 	function __construct() {
@@ -211,4 +219,4 @@ class Pods_PFAT_Frontend {
 		return $content;
 	}
 
-}
+} //Pods_PFAT_Frontend

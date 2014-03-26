@@ -52,16 +52,16 @@ if ( !defined( 'PODS_PFAT_TRANSIENT_EXPIRE' ) ) {
 }
 
 /**
- * Pods_Omega class
+ * Pods_PFAT class
  *
- * @class Pods_Omega The class that holds the entire Pods_Omega plugin
+ * @class Pods_PFAT The class that holds the entire pods-frontier-auto-templates plugin
  *
  * @since 0.0.1
  */
 class Pods_PFAT {
 
 	/**
-	 * Constructor for the Pods_Omega class
+	 * Constructor for the Pods_PFAT class
 	 *
 	 * Sets up all the appropriate hooks and actions
 	 * within the plugin.
@@ -287,6 +287,6 @@ class Pods_PFAT {
 
 	}
 
-} // Pods_Omega
+} // Pods_PFAT
 
 $GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
