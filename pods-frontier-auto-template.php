@@ -219,7 +219,7 @@ class Pods_PFAT {
 					'dependency'        => TRUE,
 					'boolean_yes_label' => ''
 				),
-				'pfat_single'  => array (
+				'pfat_archive'  => array (
 					'label'      => __( 'Taxonomy Template', 'pods-pfat' ),
 					'help'       => __( 'Name of Pods template to use for this taxonomy.', 'pods-pfat' ),
 					'type'       => 'text',

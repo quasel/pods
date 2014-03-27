@@ -167,9 +167,9 @@ class Pods_PFAT_Frontend {
 			//if is taxonomy archive of the selected taxonomy
 			if ( is_tax( $taxonomy )  ) {
 				//if pfat_single was set try to use that template
-				if ( $this_pod[ 'single' ] ) {
+				if ( $this_pod[ 'archive' ] ) {
 					//append the template
-					$content = $this->load_template( $this_pod[ 'single' ], $content , $pods );
+					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
 				}
 
 			}
