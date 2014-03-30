@@ -38,28 +38,10 @@ class Pods_PFAT_Frontend {
 		//check if we already have the results cached & use it if we can.
 		if ( false === $the_pods || PODS_PFAT_DEV_MODE ) {
 			//get all post type pods
-			$post_type_pods = pods_api()->load_pods( array( 'type' => 'post_type', 'names' => true ) );
-
-			//get all taxonomy pods
-			$tax_pods = pods_api()->load_pods( array( 'type' => 'taxonomy', 'names' => true ) );
-
-			//merge the two arrays to create return if they are both arrays
-			//else which ever one is an array use that as return
-			if ( is_array( $post_type_pods ) && is_array( $tax_pods ) ) {
-				$the_pods = array_merge( $post_type_pods, $tax_pods );
-			}
-			else {
-				if ( is_array( $post_type_pods ) ) {
-					$the_pods = $post_type_pods;
-				}
-				elseif ( is_array( $tax_pods) ) {
-					$the_pods = $tax_pods;
-				}
-				else {
-					//neither is an array so return an empty array for saftey's sake
-					$the_pods = array();
-				}
-			}
+			$the_pods = load_pods( array(
+				'type' => array('taxonomy', 'post_type'),
+				'names' => true )
+			);
 
 			//cache the results
 			set_transient( 'pods_pfat_the_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
