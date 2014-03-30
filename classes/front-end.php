@@ -38,8 +38,11 @@ class Pods_PFAT_Frontend {
 		//check if we already have the results cached & use it if we can.
 		if ( false === $the_pods || PODS_PFAT_DEV_MODE ) {
 			//get all post type pods
-			$the_pods = load_pods( array(
-				'type' => array('taxonomy', 'post_type'),
+			$the_pods = pods_api()->load_pods( array(
+				'type' => array(
+					'taxonomy',
+					'post_type'
+				),
 				'names' => true )
 			);
 
