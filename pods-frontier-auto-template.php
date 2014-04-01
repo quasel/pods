@@ -104,7 +104,7 @@ class Pods_PFAT {
 	/**
 	 * Initializes the Pods_PFAT() class
 	 *
-	 * Checks for an existing Pods_Omega() instance
+	 * Checks for an existing Pods_PFAT() instance
 	 * and if it doesn't find one, creates it.
 	 *
 	 * @since 0.0.1

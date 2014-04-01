@@ -73,11 +73,11 @@ class Pods_PFAT_Frontend {
 			//start output array empty
 			$auto_pods = array();
 
-			//loop through each to see if omega mode is enabled
+			//loop through each to see if auto templates is enabled
 			foreach ( $the_pods as $the_pod => $the_pod_label ) {
 				$pods = pods_api( $the_pod );
 
-				//if omega mode is enabled add info about Pod to array
+				//if auto template is enabled add info about Pod to array
 				if ( 1 == pods_v( 'pfat_enable', $pods->pod_data[ 'options' ] ) ) {
 					//check if pfat_single and pfat_archive are set
 					$single = pods_v( 'pfat_single', $pods->pod_data[ 'options' ], false, true );
@@ -185,9 +185,11 @@ class Pods_PFAT_Frontend {
 	}
 
 	/**
-	 * Atatch Pods Template to $content
+	 * Attach Pods Template to $content
 	 *
-	 * @param string $template_name The name of a Pods Template to load.
+	 * @param string 	$template_name 	The name of a Pods Template to load.
+	 * @param string	$content		Post content
+	 * @param object	$pods			Current Pods object.
 	 *
 	 * @return string $content with Pods Template appended if template exists
 	 *
