@@ -300,3 +300,30 @@ function pfat_safe_activate() {
 		$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
 	}
 }
+
+
+/**
+ * Throw admin nag if Pods isn't activated.
+ *
+ * Will only show on the plugins page.
+ *
+ * @since 0.0.1
+ */
+add_action( 'admin_notices', 'pfat_admin_notice' );
+function pfat_admin_notice() {
+
+	if ( ! defined( 'PODS_VERSION' ) ) {
+
+		//use the gloabl pagenow so we can tell if we are on plugins admin page
+		global $pagenow;
+		if ( $pagenow == 'plugins.php' || $page = 'pods'  ) {
+			?>
+
+			<div class="updated">
+				<p><?php _e( 'You have activated Pods Frontier Auto Templates, but not the core Pods plugin.', 'pfat' ); ?></p>
+			</div>
+		<?php
+
+		} //endif on the right page
+	} //endif Pods is not active
+}
