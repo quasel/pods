@@ -94,7 +94,7 @@ class Pods_PFAT {
 		//end the magic//
 
 		//Include and init front-end class
-		add_action( 'plugins_loaded', array( $this, 'front_end' ) );
+		add_action( 'plugins_loaded', array( $this, 'front_end' ), 25 );
 
 		//Delete transients when Pods settings are updated.
 		add_action( 'update_option', array( $this, 'reset' ), 21, 3 );
@@ -289,4 +289,14 @@ class Pods_PFAT {
 
 } // Pods_PFAT
 
-$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+/**
+ * Initialize class, if Pods is active.
+ *
+ * @since 0.0.1
+ */
+add_action( 'plugins_loaded', 'pfat_safe_activate');
+function pfat_safe_activate() {
+	if ( defined( 'PODS_VERSION' ) ) {
+		$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+	}
+}
