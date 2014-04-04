@@ -289,4 +289,12 @@ class Pods_PFAT {
 
 } // Pods_PFAT
 
-$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+/**
+ * Initialize main class if Pods is active.
+ *
+ * @since 0.0.1
+ */
+if ( defined( 'PODS_VERSION' ) ) {
+	$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+}
+//@TODO ELSE: Admin nag?
