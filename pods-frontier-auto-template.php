@@ -316,13 +316,12 @@ function pfat_admin_notice() {
 
 		//use the gloabl pagenow so we can tell if we are on plugins admin page
 		global $pagenow;
-		if ( $pagenow == 'plugins.php' || $page = 'pods'  ) {
+		if ( $pagenow == 'plugins.php' ) {
 			?>
-
-			<div class="updated">
-				<p><?php _e( 'You have activated Pods Frontier Auto Templates, but not the core Pods plugin.', 'pfat' ); ?></p>
-			</div>
-		<?php
+				<div class="updated">
+					<p><?php _e( 'You have activated Pods Frontier Auto Templates, but not the core Pods plugin.', 'pfat' ); ?></p>
+				</div>
+			<?php
 
 		} //endif on the right page
 	} //endif Pods is not active
