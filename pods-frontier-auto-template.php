@@ -290,14 +290,16 @@ class Pods_PFAT {
 } // Pods_PFAT
 
 /**
- * Initialize class, if Pods is active.
+ * Initialize class, if Pods is active and minimum version is met.
  *
  * @since 0.0.1
  */
 add_action( 'plugins_loaded', 'pfat_safe_activate');
 function pfat_safe_activate() {
 	if ( defined( 'PODS_VERSION' ) ) {
-		$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+		if (version_compare( PODS_VERSION, '2.3.18' ) >= 0) {
+			$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+		}
 	}
 }
 
@@ -309,12 +311,12 @@ function pfat_safe_activate() {
  *
  * @since 0.0.1
  */
-add_action( 'admin_notices', 'pfat_admin_notice' );
-function pfat_admin_notice() {
+add_action( 'admin_notices', 'pfat_admin_notice_pods_not_active' );
+function pfat_admin_notice_pods_not_active() {
 
 	if ( ! defined( 'PODS_VERSION' ) ) {
 
-		//use the gloabl pagenow so we can tell if we are on plugins admin page
+		//use the global pagenow so we can tell if we are on plugins admin page
 		global $pagenow;
 		if ( $pagenow == 'plugins.php' ) {
 			?>
@@ -326,3 +328,36 @@ function pfat_admin_notice() {
 		} //endif on the right page
 	} //endif Pods is not active
 }
+
+/**
+ * Throw admin nag if Pods minimum version is not met
+ *
+ * Will only show on the Pods admin page
+ *
+ * @since 0.0.1
+ */
+add_action( 'admin_notices', 'pfat_admin_notice_pods_min_version_fail' );
+function pfat_admin_notice_pods_min_version_fail() {
+
+	if ( defined( 'PODS_VERSION' ) ) {
+
+		//set minimum supported version of Pods.
+		$minimum_version = '2.3.18';
+
+		//check if Pods version is greater than or equal to minimum supported version for this plugin
+		if ( version_compare(  $minimum_version, PODS_VERSION ) >= 0) {
+
+		//create $page variable to check if we are on pods admin page
+		$page = pods_v('page','get', false, true );
+
+		//check if we are on Pods Admin page
+		if ( $page === 'pods' ) {
+			?>
+			<div class="updated">
+				<p><?php _e( 'Pods Frontier Auto Templates, requires Pods version '.$minimum_version.' or later. Current version of Pods is '.PODS_VERSION, 'pfat' ); ?></p>
+			</div>
+		<?php
+
+		} //endif on the right page
+	} //endif Pods is not active
+}}
