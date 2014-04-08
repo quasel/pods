@@ -347,17 +347,18 @@ function pfat_admin_notice_pods_min_version_fail() {
 		//check if Pods version is greater than or equal to minimum supported version for this plugin
 		if ( version_compare(  $minimum_version, PODS_VERSION ) >= 0) {
 
-		//create $page variable to check if we are on pods admin page
-		$page = pods_v('page','get', false, true );
+			//create $page variable to check if we are on pods admin page
+			$page = pods_v('page','get', false, true );
 
-		//check if we are on Pods Admin page
-		if ( $page === 'pods' ) {
-			?>
-			<div class="updated">
-				<p><?php _e( 'Pods Frontier Auto Templates, requires Pods version '.$minimum_version.' or later. Current version of Pods is '.PODS_VERSION, 'pfat' ); ?></p>
-			</div>
-		<?php
+			//check if we are on Pods Admin page
+			if ( $page === 'pods' ) {
+				?>
+				<div class="updated">
+					<p><?php _e( 'Pods Frontier Auto Templates, requires Pods version '.$minimum_version.' or later. Current version of Pods is '.PODS_VERSION, 'pfat' ); ?></p>
+				</div>
+			<?php
 
-		} //endif on the right page
+			} //endif on the right page
+		} //endif version compare
 	} //endif Pods is not active
-}}
+}
