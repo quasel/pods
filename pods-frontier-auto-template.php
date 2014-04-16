@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Pods Frontier Auto Template
-Plugin URI: http://pods.io
+Plugin URI: http://pods.io/?p=182830
 Description: Automatic front-end output of Pods Templates.
-Version: 0.0.1
+Version: 0.1.0
 Author: Pods Framework Team
-Author URI: http://pods.io/about/
+Author URI: http://pods.io/
 Text Domain: pods-pfat
 License: GPL v2 or later
 */
