@@ -11,11 +11,15 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Automatic front-end output of Pods Templates.
 
 == Description ==
-Pods Frontier Auto Display is a plugin that allows you to easily output Pods Templates for your Pods custom post types, extended posts and pages and taxonomies. With this plugin, Pods provides a complete solution for creating custom content types, adding fields to them and outputting the custom fields for your custom content types without writing any PHP code or modifying your theme file. With this plugin and Pods, WordPress as a CMS now requires a basic knowledge of html and CSS.
+Pods Frontier Auto Display is a plugin that allows you to easily output Pods Templates for your Pods custom post types, extended posts and pages and taxonomies. With this plugin, Pods provides a complete solution for creating custom content types, adding fields to them and outputting the custom fields for your custom content types without writing any PHP code or modifying your theme file. Using WordPress as a CMS has never been easier, and requires only a basic knowledge of html and CSS.
 
 Once it this plugin is activated, you will see a new tab "Pods Frontier Auto Templates" in the Pods editor for compatible post types. Simply set the name of the Pods Templates you'd like to use for single and archive view in that tab.
 
 Requires [Pods 2.3.18](http://wordpress.org/plugins/pods/) or later.
+
+Supports only post types, built-in and extended as well as custom taxonomy Pods.
+
+For usage instructions, please see [this article on our site](http://pods.io/tutorials/creating-pods-plugins/using-pods-display/).
 
 == Installation ==
 1. Unpack the entire contents of this plugin zip file into your `wp-content/plugins/` folder locally
