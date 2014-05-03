@@ -272,7 +272,7 @@ class Pods_PFAT {
 		if ( $option === '_transient_pods_flush_rewrites' ) {
 			//@TODO REMOVE THIS
 			$this->delete_transients();
-			$this->delete_options();
+			$this->reset_options();
 		}
 
 	}
@@ -296,9 +296,11 @@ class Pods_PFAT {
 	 *
 	 * @since 0.2.0
 	 */
-	function delete_options() {
+	function reset_options() {
+
 		update_option( 'pods_pfat_the_pods', false );
 		update_option( 'pods_pfat_auto_pods', false );
+
 	}
 
 } // Pods_PFAT
