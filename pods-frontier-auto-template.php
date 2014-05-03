@@ -122,20 +122,24 @@ class Pods_PFAT {
 	}
 
 	/**
-	 * Placeholder for activation function
+	 * Activation function
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 */
 	public function activate() {
 
+		$this->reset_options();
 	}
 
 	/**
-	 * Placeholder for deactivation function
+	 * Deactivation function
 	 *
-	 * @since 0.0.1
+	 * @since 0.2.0
 	 */
 	public function deactivate() {
+
+		delete_option( 'pods_pfat_the_pods' );
+		delete_option( 'pods_pfat_auto_pods' );
 
 	}
 
