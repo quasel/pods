@@ -33,7 +33,7 @@ class Pods_PFAT_Frontend {
 	function the_pods() {
 
 		//use the cached results
-		$the_pods = get_transient( 'pods_pfat_the_pods' );
+		$the_pods = get_option( 'pods_pfat_the_pods' );
 
 		//check if we already have the results cached & use it if we can.
 		if ( false === $the_pods || PODS_PFAT_DEV_MODE ) {
@@ -47,7 +47,7 @@ class Pods_PFAT_Frontend {
 			);
 
 			//cache the results
-			set_transient( 'pods_pfat_the_pods', $the_pods, PODS_PFAT_TRANSIENT_EXPIRE );
+			update_option( 'pods_pfat_the_pods', $the_pods );
 		}
 
 		return $the_pods;
@@ -63,7 +63,7 @@ class Pods_PFAT_Frontend {
 	 */
 	function auto_pods() {
 		//try to get cached results of this method
-		$auto_pods = get_transient( 'pods_pfat_auto_pods' );
+		$auto_pods = get_option( 'pods_pfat_auto_pods' );
 
 		//check if we already have the results cached & use it if we can.
 		if ( $auto_pods === false || PODS_PFAT_DEV_MODE ) {
@@ -93,7 +93,7 @@ class Pods_PFAT_Frontend {
 			} //endforeach
 
 			//cache the results
-			set_transient( 'pods_pfat_auto_pods', $auto_pods, PODS_PFAT_TRANSIENT_EXPIRE );
+			update_option( 'pods_pfat_auto_pods', $auto_pods );
 		}
 
 		return $auto_pods;
