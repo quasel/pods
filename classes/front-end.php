@@ -113,37 +113,31 @@ class Pods_PFAT_Frontend {
 	 */
 	function front( $content ) {
 
-		//get global post object
-		global $post;
-
-		//first use other methods in class to build array to search in/ use
-		$possible_pods = $this->auto_pods();
-
-		//check if on a taxonomy
+		//start by getting current post or stdClass object
 		global $wp_query;
-		if ( isset( $wp_query->query_vars[ 'taxonomy'] ) ) {
-			//if so, but current taxonomy name in a variable
-			$taxonomy = $wp_query->query_vars[ 'taxonomy'];
+		$obj = $wp_query->get_queried_object();
 
-			//and set $current_post_type to the name of the current taxonomy
-			$current_post_type = $taxonomy;
-		}
-		else {
-			//get set to current post's post type
-			$current_post_type = get_post_type( $post->ID );
-
-			//if $current_post_type is false then set it to post
-			if ( $current_post_type === false ) {
-				$current_post_type = 'post';
-			}
+		//see if we are on a post type and if so, set $current_post_type to post type
+		if ( isset( $obj->post_type ) ) {
+			$current_post_type = $obj->post_type;
 
 			//also set $taxonomy false
 			$taxonomy = false;
 		}
+		else {
+			$taxonomy = $obj->taxonomy;
+
+			$current_post_type = $taxonomy;
+
+		}
+		//now use other methods in class to build array to search in/ use
+		$possible_pods = $this->auto_pods();
 
 		//check if $current_post_type is the key of the array of possible pods
 		if ( isset( $possible_pods[ $current_post_type ] ) ) {
+
 			//build Pods object for current item
+			global $post;
 			$pods = pods( $current_post_type, $post->ID );
 
 			//get array for the current post type
