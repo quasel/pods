@@ -190,18 +190,24 @@ class Pods_PFAT_Frontend {
 	 * @param string 	$template_name 	The name of a Pods Template to load.
 	 * @param string	$content		Post content
 	 * @param object	$pods			Current Pods object.
+	 * @param bool		$append			Whether to append content or replace.
 	 *
 	 * @return string $content with Pods Template appended if template exists
 	 *
 	 * @since 0.0.1
 	 */
-	function load_template( $template_name, $content, $pods  ) {
+	function load_template( $template_name, $content, $pods, $append = false  ) {
 		//get the template
 		$template = $pods->template( $template_name );
 
 		//check if we got a valid template
 		if ( !is_null( $template ) ) {
-			$content = $content . $template;
+			if ( $append ) {
+				$content = $content . $template;
+			}
+			else {
+				$content = $template;
+			}
 		}
 
 		return $content;
