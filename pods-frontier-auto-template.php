@@ -274,26 +274,11 @@ class Pods_PFAT {
 	function reset( $option, $old_value, $value ) {
 
 		if ( $option === '_transient_pods_flush_rewrites' ) {
-			//@TODO REMOVE THIS
-			$this->delete_transients();
 			$this->reset_options();
 		}
 
 	}
 
-	/**
-	 * Delete the transients set by this plugin
-	 *
-	 * @TODO DELETE THIS
-	 *
-	 * @since 0.0.1
-	 */
-	function delete_transients() {
-
-		delete_transient( 'pods_pfat_the_pods' );
-		delete_transient( 'pods_pfat_auto_pods' );
-
-	}
 
 	/**
 	 * Delete options that stores the settings.
