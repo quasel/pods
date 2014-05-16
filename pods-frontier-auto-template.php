@@ -128,7 +128,7 @@ class Pods_PFAT {
 	 */
 	public function activate() {
 
-		$this->reset_options();
+
 	}
 
 	/**
@@ -138,8 +138,7 @@ class Pods_PFAT {
 	 */
 	public function deactivate() {
 
-		delete_option( 'pods_pfat_the_pods' );
-		delete_option( 'pods_pfat_auto_pods' );
+		$this->reseter();
 
 	}
 
@@ -249,7 +248,7 @@ class Pods_PFAT {
 	function front_end() {
 
 		if ( PODS_PFAT_DEV_MODE ) {
-			$this->delete_transients();
+			$this->reseter();
 		}
 
 		if ( !is_admin() ) {
@@ -281,14 +280,15 @@ class Pods_PFAT {
 
 
 	/**
-	 * Delete options that stores the settings.
+	 * Delete transients that stores the settings.
 	 *
 	 * @since 0.2.0
 	 */
-	function reset_options() {
-
-		update_option( 'pods_pfat_the_pods', false );
-		update_option( 'pods_pfat_auto_pods', false );
+	function reseter() {
+		$keys = array( 'pods_pfat_the_pods', 'pods_pfat_auto_pods' );
+		foreach( $keys as $key ) {
+			pods_transient_clear( $key );
+		}
 
 	}
 
