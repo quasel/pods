@@ -127,11 +127,20 @@ class Pods_PFAT_Frontend {
 			//also set $taxonomy false
 			$taxonomy = false;
 		}
-		else {
+		elseif ( isset( $obj->taxonomy ) ) {
 			$taxonomy = $obj->taxonomy;
 
 			$current_post_type = $taxonomy;
 
+		}
+		elseif ( isset ( $obj->name ) ) {
+			$current_post_type = $obj->name;
+		}
+		elseif ( is_home() ) {
+			$current_post_type = 'post';
+		}
+		else {
+			$current_post_type = false;
 		}
 		//now use other methods in class to build array to search in/ use
 		$possible_pods = $this->auto_pods();
