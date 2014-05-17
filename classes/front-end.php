@@ -31,8 +31,9 @@ class Pods_PFAT_Frontend {
 	 * @since 0.0.1
 	 */
 	function the_pods() {
-		$key = 'pods_pfat_the_pods';
+
 		//use the cached results
+		$key = 'pods_pfat_the_pods';
 		$the_pods = pods_transient_get( $key  );
 
 		//check if we already have the results cached & use it if we can.
@@ -64,8 +65,8 @@ class Pods_PFAT_Frontend {
 	 */
 	function auto_pods() {
 
-		$key = 'pods_pfat_auto_pods';
 		//try to get cached results of this method
+		$key = 'pods_pfat_auto_pods';
 		$auto_pods = pods_transient_get( $key );
 
 		//check if we already have the results cached & use it if we can.
@@ -135,7 +136,6 @@ class Pods_PFAT_Frontend {
 			$taxonomy = $obj->taxonomy;
 
 			$current_post_type = $taxonomy;
-
 		}
 		elseif ( isset ( $obj->name ) ) {
 			$current_post_type = $obj->name;
@@ -146,6 +146,7 @@ class Pods_PFAT_Frontend {
 		else {
 			$current_post_type = false;
 		}
+
 		//now use other methods in class to build array to search in/ use
 		$possible_pods = $this->auto_pods();
 

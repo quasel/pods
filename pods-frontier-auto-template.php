@@ -190,16 +190,16 @@ class Pods_PFAT {
 					'label'             => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
 					'help'              => __( 'When enabled you can specify the names of Pods Templates to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
 					'type'              => 'boolean',
-					'default'           => FALSE,
-					'dependency'        => TRUE,
+					'default'           => false,
+					'dependency'        => true,
 					'boolean_yes_label' => ''
 				),
 				'pfat_single'  => array (
 					'label'      => __( 'Single item view template', 'pods-pfat' ),
 					'help'       => __( 'Name of Pods template to use for single item view.', 'pods-pfat' ),
 					'type'       => 'text',
-					'default'    => FALSE,
-					'depends-on' => array ( 'pfat_enable' => TRUE )
+					'default'    => false,
+					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_single'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
@@ -213,8 +213,8 @@ class Pods_PFAT {
 					'label'      => __( 'Archive view template', 'pods-pfat' ),
 					'help'       => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-pfat' ),
 					'type'       => 'text',
-					'default'    => FALSE,
-					'depends-on' => array ( 'pfat_enable' => TRUE )
+					'default'    => false,
+					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_archive'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
@@ -234,16 +234,16 @@ class Pods_PFAT {
 					'label'             => __( 'Enable Automatic Pods Templates for this Pod?', 'pods-pfat' ),
 					'help'              => __( 'When enabled you can specify the names of a Pods Template to be used to display items in this Pod in the front-end.', 'pods-pfat' ),
 					'type'              => 'boolean',
-					'default'           => FALSE,
-					'dependency'        => TRUE,
+					'default'           => false,
+					'dependency'        => true,
 					'boolean_yes_label' => ''
 				),
 				'pfat_archive'  => array (
 					'label'      => __( 'Taxonomy Template', 'pods-pfat' ),
 					'help'       => __( 'Name of Pods template to use for this taxonomy.', 'pods-pfat' ),
 					'type'       => 'text',
-					'default'    => FALSE,
-					'depends-on' => array ( 'pfat_enable' => TRUE )
+					'default'    => false,
+					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_archive'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
