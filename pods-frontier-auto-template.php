@@ -201,12 +201,28 @@ class Pods_PFAT {
 					'default'    => FALSE,
 					'depends-on' => array ( 'pfat_enable' => TRUE )
 				),
+				'pfat_append_single'  => array (
+					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
+					'help'       => __( 'Whether to append template to content or replace content with template for single item view.', 'pods-pfat' ),
+					'type'       => 'boolean',
+					'default'    => true,
+					'depends-on' => array ( 'pfat_enable' => true ),
+					'boolean_yes_label' => 'Append Template For Single Items?',
+				),
 				'pfat_archive' => array (
 					'label'      => __( 'Archive view template', 'pods-pfat' ),
 					'help'       => __( 'Name of Pods template to use for use in this Pods archive pages.', 'pods-pfat' ),
 					'type'       => 'text',
 					'default'    => FALSE,
 					'depends-on' => array ( 'pfat_enable' => TRUE )
+				),
+				'pfat_append_archive'  => array (
+					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
+					'help'       => __( 'Whether to append template to content or replace content with template for archive view.', 'pods-pfat' ),
+					'type'       => 'boolean',
+					'default'    => true,
+					'depends-on' => array ( 'pfat_enable' => true ),
+					'boolean_yes_label' => 'Append Template For Archive View?',
 				),
 			);
 		}
@@ -228,6 +244,14 @@ class Pods_PFAT {
 					'type'       => 'text',
 					'default'    => FALSE,
 					'depends-on' => array ( 'pfat_enable' => TRUE )
+				),
+				'pfat_append_archive'  => array (
+					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
+					'help'       => __( 'Whether to append template to content or replace content with template.', 'pods-pfat' ),
+					'type'       => 'boolean',
+					'default'    => true,
+					'depends-on' => array ( 'pfat_enable' => true ),
+					'boolean_yes_label' => 'Append Template?',
 				),
 			);
 		}
@@ -273,7 +297,7 @@ class Pods_PFAT {
 	function reset( $option, $old_value, $value ) {
 
 		if ( $option === '_transient_pods_flush_rewrites' ) {
-			$this->reset_options();
+			$this->reseter();
 		}
 
 	}

@@ -85,12 +85,16 @@ class Pods_PFAT_Frontend {
 					//check if pfat_single and pfat_archive are set
 					$single = pods_v( 'pfat_single', $pods->pod_data[ 'options' ], false, true );
 					$archive = pods_v( 'pfat_archive', $pods->pod_data[ 'options' ], false, true );
+					$single_append = pods_v( 'pfat_append_single', $pods->pod_data[ 'options' ], true, true );
+					$archive_append = pods_v( 'pfat_append_archive', $pods->pod_data[ 'options' ], true, true );
 
 					//build output array
 					$auto_pods[ $the_pod ] = array(
 						'name' => $the_pod,
 						'single' => $single,
-						'archive' => $archive
+						'archive' => $archive,
+						'single_append' => $single_append,
+						'archive_append' => $archive_append,
 					);
 				}
 			} //endforeach
@@ -157,21 +161,21 @@ class Pods_PFAT_Frontend {
 
 
 			if ( $this_pod[ 'single' ] && is_singular( $current_post_type ) ) {
-					//append the template
-					$content = $this->load_template( $this_pod[ 'single' ], $content , $pods );
+				//load the template
+				$content = $this->load_template( $this_pod[ 'single' ], $content , $pods, $this_pod[ 'single_append' ] );
 
 			}
 			//if pfat_archive was set try to use that template
 			//check if we are on an archive of the post type
 			elseif ( $this_pod[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
-					//append the template
-					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
+				//load the template
+				$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods, $this_pod[ 'archive_append' ] );
 
 			}
 			//if pfat_archive was set and we're in the blog index, try to append template
 			elseif ( is_home() && $this_pod[ 'archive' ] && $current_post_type === 'post'  ) {
 				//append the template
-				$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
+				$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods, $this_pod[ 'archive_append' ] );
 
 			}
 			//if is taxonomy archive of the selected taxonomy
@@ -179,7 +183,7 @@ class Pods_PFAT_Frontend {
 				//if pfat_single was set try to use that template
 				if ( $this_pod[ 'archive' ] ) {
 					//append the template
-					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods );
+					$content = $this->load_template( $this_pod[ 'archive' ], $content , $pods, $this_pod[ 'archive_append' ] );
 				}
 
 			}
@@ -206,9 +210,10 @@ class Pods_PFAT_Frontend {
 		//get the template
 		$template = $pods->template( $template_name );
 
-		//check if we got a valid template
+		//check if we have a valid template
 		if ( !is_null( $template ) ) {
-			if ( $append === true  ) {
+			//if so append it to content or replace content.
+			if ( $append ) {
 				$content = $content . $template;
 			}
 			else {
