@@ -4,7 +4,7 @@ Tags:  content types, custom fields, custom post types, custom taxonomies, pods,
 Donate link: http://podsfoundation.org/donate/
 Requires at least: 3.8
 Tested up to: 3.9
-Stable tag: 0.1.1
+Stable tag: 0.2.0
 License: GPL v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -60,7 +60,13 @@ Ask it in the Pods [support forums](http://pods.io/forums/) or in #pods on irc.f
 == Changelog ==
 = 0.1.0 =
 First WPORG release.
+= 0.2.0 =
+* Add option to replace post content with template instead of appending it.
+* Improved context detection in Pods_PFAT_Frontend::front()
+* Using pods_transient_set()/ pods_transient_get() for transient caching.
 
 == Upgrade Notice ==
+= 0.2.0 =
+Now includes an option to replace post content with the template instead of appending it and more efficient code.
 = 0.1.0 =
 First WPORG release.
