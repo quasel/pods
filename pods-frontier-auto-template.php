@@ -3,7 +3,7 @@
 Plugin Name: Pods Frontier Auto Template
 Plugin URI: http://pods.io/?p=182830
 Description: Automatic front-end output of Pods Templates.
-Version: 0.2.0
+Version: 1.0.0
 Author: Pods Framework Team
 Author URI: http://pods.io/
 Text Domain: pods-pfat
@@ -124,7 +124,7 @@ class Pods_PFAT {
 	/**
 	 * Activation function
 	 *
-	 * @since 0.2.0
+	 * @since 1.0.0
 	 */
 	public function activate() {
 
@@ -134,7 +134,7 @@ class Pods_PFAT {
 	/**
 	 * Deactivation function
 	 *
-	 * @since 0.2.0
+	 * @since 1.0.0
 	 */
 	public function deactivate() {
 
@@ -306,7 +306,7 @@ class Pods_PFAT {
 	/**
 	 * Delete transients that stores the settings.
 	 *
-	 * @since 0.2.0
+	 * @since 1.0.0
 	 */
 	function reseter() {
 		$keys = array( 'pods_pfat_the_pods', 'pods_pfat_auto_pods' );
