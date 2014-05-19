@@ -60,7 +60,7 @@ Ask it in the Pods [support forums](http://pods.io/forums/) or in #pods on irc.f
 == Changelog ==
 = 0.1.0 =
 First WPORG release.
-= 0.2.0 =
+= 1.0.0 =
 * Add option to replace post content with template instead of appending it.
 * Improved context detection in Pods_PFAT_Frontend::front()
 * Using pods_transient_set()/ pods_transient_get() for transient caching.
@@ -68,5 +68,5 @@ First WPORG release.
 == Upgrade Notice ==
 = 0.2.0 =
 Now includes an option to replace post content with the template instead of appending it and more efficient code.
-= 0.1.0 =
+= 1.0.0 =
 First WPORG release.
