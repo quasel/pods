@@ -198,10 +198,10 @@ class Pods_PFAT_Frontend {
 	/**
 	 * Attach Pods Template to $content
 	 *
-	 * @param string 	$template_name 	The name of a Pods Template to load.
-	 * @param string	$content		Post content
-	 * @param object	$pods			Current Pods object.
-	 * @param bool		$append			Optional. Whether to append content or replace. Default to true.
+	 * @param string 		$template_name 	The name of a Pods Template to load.
+	 * @param string		$content		Post content
+	 * @param object		$pods			Current Pods object.
+	 * @param bool|string	$append			Optional. Whether to append, prepend or replace content. Defaults to true, which appends, if false, content is replaced, if 'prepend' content is prepended.
 	 *
 	 * @return string $content with Pods Template appended if template exists
 	 *
@@ -214,7 +214,11 @@ class Pods_PFAT_Frontend {
 		//check if we have a valid template
 		if ( !is_null( $template ) ) {
 			//if so append it to content or replace content.
-			if ( $append ) {
+
+			if ( $append === 'prepend' ) {
+				$content = $template . $content;
+			}
+			elseif ( $append || $append === 'append' ) {
 				$content = $content . $template;
 			}
 			else {
