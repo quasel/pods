@@ -204,10 +204,17 @@ class Pods_PFAT {
 				'pfat_append_single'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
 					'help'       => __( 'Whether to append template to content or replace content with template for single item view.', 'pods-pfat' ),
-					'type'       => 'boolean',
-					'default'    => true,
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'boolean_yes_label' => 'Append Template For Single Items?',
+					'type'              => 'pick',
+					'pick_format_type' => 'single',
+					'pick_format_single' => 'dropdown',
+					'data' => array(
+						'append' => __( 'After', 'pods-pfat'),
+						'prepend' => __( 'Before', 'pods-pfat'),
+						'replace' => __( 'Replace', 'pods-pfat' ),
+					),
+					'default'    => 'true',
+
 				),
 				'pfat_archive' => array (
 					'label'      => __( 'Archive view template', 'pods-pfat' ),
@@ -219,10 +226,17 @@ class Pods_PFAT {
 				'pfat_append_archive'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
 					'help'       => __( 'Whether to append template to content or replace content with template for archive view.', 'pods-pfat' ),
-					'type'       => 'boolean',
-					'default'    => true,
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'boolean_yes_label' => 'Append Template For Archive View?',
+					'type'              => 'pick',
+					'pick_format_type' => 'single',
+					'pick_format_single' => 'dropdown',
+					'data' => array(
+						'append' => __( 'After', 'pods-pfat'),
+						'prepend' => __( 'Before', 'pods-pfat'),
+						'replace' => __( 'Replace', 'pods-pfat' ),
+					),
+					'default'    => 'true',
+
 				),
 			);
 		}
@@ -248,10 +262,16 @@ class Pods_PFAT {
 				'pfat_append_archive'  => array (
 					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
 					'help'       => __( 'Whether to append template to content or replace content with template.', 'pods-pfat' ),
-					'type'       => 'boolean',
-					'default'    => true,
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'boolean_yes_label' => 'Append Template?',
+					'type'              => 'pick',
+					'pick_format_type' => 'single',
+					'pick_format_single' => 'dropdown',
+					'data' => array(
+						'append' => __( 'After', 'pods-pfat'),
+						'prepend' => __( 'Before', 'pods-pfat'),
+						'replace' => __( 'Replace', 'pods-pfat' ),
+					),
+					'default'    => 'true',
 				),
 			);
 		}
