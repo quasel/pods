@@ -215,7 +215,10 @@ class Pods_PFAT_Frontend {
 		if ( !is_null( $template ) ) {
 			//if so append it to content or replace content.
 
-			if ( $append === 'prepend' ) {
+			if ( $append === 'replace' ) {
+				$content = $template;
+			}
+			elseif ( $append === 'prepend' ) {
 				$content = $template . $content;
 			}
 			elseif ( $append || $append === 'append' ) {
