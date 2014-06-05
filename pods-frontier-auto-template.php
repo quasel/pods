@@ -202,8 +202,8 @@ class Pods_PFAT {
 					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_single'  => array (
-					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
-					'help'       => __( 'Whether to append template to content or replace content with template for single item view.', 'pods-pfat' ),
+					'label'      => __( 'Single Template Location', 'pods-pfat' ),
+					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
 					'type'              => 'pick',
 					'pick_format_type' => 'single',
@@ -224,8 +224,8 @@ class Pods_PFAT {
 					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_archive'  => array (
-					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
-					'help'       => __( 'Whether to append template to content or replace content with template for archive view.', 'pods-pfat' ),
+					'label'      => __( 'Archive Template Location', 'pods-pfat' ),
+					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
 					'type'              => 'pick',
 					'pick_format_type' => 'single',
@@ -260,8 +260,8 @@ class Pods_PFAT {
 					'depends-on' => array ( 'pfat_enable' => true )
 				),
 				'pfat_append_archive'  => array (
-					'label'      => __( 'Append template to content or replace content?', 'pods-pfat' ),
-					'help'       => __( 'Whether to append template to content or replace content with template.', 'pods-pfat' ),
+					'label'      => __( 'Template Location', 'pods-pfat' ),
+					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
 					'type'              => 'pick',
 					'pick_format_type' => 'single',
