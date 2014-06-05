@@ -280,7 +280,7 @@ class Pods_PFAT {
 	 * Include/ init the front end class on the front end only
 	 *
 	 * @param bool	$load_in_admin Optional. Whether to load in admin. Default is false.
-	 *                            
+	 *
 	 * @return Pods_PFAT_Frontend
 	 *
 	 * @since 0.0.1
@@ -327,6 +327,7 @@ class Pods_PFAT {
 	 * @since 1.0.0
 	 */
 	function reseter() {
+
 		$keys = array( 'pods_pfat_the_pods', 'pods_pfat_auto_pods', 'pods_pfat_archive_test' );
 		foreach( $keys as $key ) {
 			pods_transient_clear( $key );
@@ -354,10 +355,13 @@ class Pods_PFAT {
 				if ( !$pod[ 'has_archive' ] && $pod[ 'archive' ] ) {
 					$archive_test[ $pod[ 'label' ] ] = 'fail';
 				}
+
 			}
+
 		}
 
 		return $archive_test;
+
 	}
 
 	/**
@@ -388,6 +392,7 @@ class Pods_PFAT {
 			}
 
 		}
+
 	}
 
 } // Pods_PFAT
@@ -402,7 +407,9 @@ function pfat_safe_activate() {
 	if ( defined( 'PODS_VERSION' ) ) {
 		if (version_compare( PODS_VERSION, '2.3.18' ) >= 0) {
 			$GLOBALS[ 'Pods_PFAT' ] = Pods_PFAT::init();
+
 		}
+
 	}
 }
 
@@ -429,7 +436,9 @@ function pfat_admin_notice_pods_not_active() {
 			<?php
 
 		} //endif on the right page
+
 	} //endif Pods is not active
+
 }
 
 /**
@@ -462,6 +471,9 @@ function pfat_admin_notice_pods_min_version_fail() {
 			<?php
 
 			} //endif on the right page
+
 		} //endif version compare
+
 	} //endif Pods is not active
+	
 }
