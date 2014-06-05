@@ -64,6 +64,21 @@ class Pods_PFAT_Frontend {
 	 * @since 0.0.1
 	 */
 	function auto_pods() {
+		/**
+		 * Filter to override all settings for which templates are used.
+		 *
+		 * Note: If this filter does not return null, all back-end settings are ignored. To add to settings with a filter, use 'pods_pfat_auto_pods';
+		 *
+		 * @param array $auto_pods Array of parameters to use instead of those from settings.
+		 *
+		 * @return array Settings arrays for each post type.
+		 *
+		 * @since 1.1.0
+		 */
+		$auto_pods = apply_filters( 'pods_pfat_auto_pods_override', null );
+		if ( !is_null( $auto_pods ) ) {
+			return $auto_pods;
+		}
 
 		//try to get cached results of this method
 		$key = 'pods_pfat_auto_pods';
@@ -107,12 +122,26 @@ class Pods_PFAT_Frontend {
 						'has_archive'	=> $has_archive,
 					);
 				}
+
 			} //endforeach
 
 			//cache the results
 			pods_transient_set( $key, $auto_pods );
 		}
 
+		/**
+		 * Add to or change settings.
+		 *
+		 * Use this filter to change or add to the settings set in the back-end for this plugin. Has no effect if 'pods_pfat_auto_pods_override' filter is being used.
+		 *
+		 * @param array $auto_pods Array of parameters to use instead of those from settings.
+		 *
+		 * @return array Settings arrays for each post type.
+		 *
+		 * @since 1.1.0
+		 */
+		$auto_pods = apply_filters( 'pods_pfat_auto_pods', $auto_pods );
+		
 		return $auto_pods;
 
 	}
