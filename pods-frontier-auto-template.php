@@ -41,6 +41,17 @@ if ( !defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+
+/**
+ * Define path constants
+ *
+ * @since 1.1.0
+ */
+define( 'PODS_PFAT_SLUG', PODS_PFAT_SLUG );
+define( 'PODS_PFAT_URL', plugin_dir_url( __FILE__ ) );
+define( 'PODS_PFAT_DIR', plugin_dir_path( __FILE__ ) );
+
+
 //add a dev mode for this
 if ( !defined( 'PODS_PFAT_DEV_MODE' ) ) {
 	define( 'PODS_PFAT_DEV_MODE', false );
@@ -151,7 +162,7 @@ class Pods_PFAT {
 	 */
 	public function localization_setup() {
 
-		load_plugin_textdomain( 'pods-pfat', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+		load_plugin_textdomain( 'pods-pfat', false, dirname( PODS_PFAT_SLUG ) . '/languages/' );
 
 	}
 
@@ -475,5 +486,5 @@ function pfat_admin_notice_pods_min_version_fail() {
 		} //endif version compare
 
 	} //endif Pods is not active
-	
+
 }
