@@ -99,6 +99,8 @@ class Pods_PFAT {
 		//Delete transients when Pods settings are updated.
 		add_action( 'update_option', array( $this, 'reset' ), 21, 3 );
 
+
+		add_action( 'admin_notices', array( $this, 'archive_warning' ) );
 	}
 
 	/**
@@ -277,20 +279,24 @@ class Pods_PFAT {
 	/**
 	 * Include/ init the front end class on the front end only
 	 *
+	 * @param bool	$load_in_admin Optional. Whether to load in admin. Default is false.
+	 *                            
 	 * @return Pods_PFAT_Frontend
 	 *
 	 * @since 0.0.1
 	 */
-	function front_end() {
+	function front_end( $load_in_admin = false ) {
 
 		if ( PODS_PFAT_DEV_MODE ) {
 			$this->reseter();
 		}
 
-		if ( !is_admin() ) {
+		if ( !is_admin() || $load_in_admin ) {
 			include_once( 'classes/front-end.php' );
 
-			$GLOBALS[ 'Pods_PFAT_Frontend' ] = new Pods_PFAT_Frontend();
+			$front = $GLOBALS[ 'Pods_PFAT_Frontend' ] = new Pods_PFAT_Frontend();
+
+			return $front;
 		}
 
 	}
@@ -321,11 +327,67 @@ class Pods_PFAT {
 	 * @since 1.0.0
 	 */
 	function reseter() {
-		$keys = array( 'pods_pfat_the_pods', 'pods_pfat_auto_pods' );
+		$keys = array( 'pods_pfat_the_pods', 'pods_pfat_auto_pods', 'pods_pfat_archive_test' );
 		foreach( $keys as $key ) {
 			pods_transient_clear( $key );
 		}
 
+	}
+
+	/**
+	 * Test if archive is set for post types that don't have archives.
+	 *
+	 * @return bool|mixed|null|void
+	 *
+	 * @since 1.1.0
+	 */
+	function archive_test() {
+
+		//try to get cached results of this method
+		$key = 'pods_pfat_archive_test';
+		$archive_test = pods_transient_get( $key );
+
+		if ( $archive_test === false || PODS_PFAT_DEV_MODE ) {
+			$front = $this->front_end( TRUE );
+			$auto_pods = $front->auto_pods();
+			foreach ( $auto_pods as $pod ) {
+				if ( !$pod[ 'has_archive' ] && $pod[ 'archive' ] ) {
+					$archive_test[ $pod[ 'label' ] ] = 'fail';
+				}
+			}
+		}
+
+		return $archive_test;
+	}
+
+	/**
+	 * Throw admin warnings for post types that have archive templates set, but don't support archives
+	 *
+	 * @since 1.1.0
+	 */
+	function archive_warning() {
+
+		//create $page variable to check if we are on pods admin page
+		$page = pods_v('page','get', false, true );
+
+		//check if we are on Pods Admin page
+		if ( $page === 'pods' ) {
+			$archive_test = $this->archive_test();
+			if ( is_array( $archive_test ) ) {
+				foreach ( $archive_test as $label => $test ) {
+					if ( $test === 'fail' ) {
+						echo sprintf( '<div id="message" class="error"><p>%s</p></div>',
+							sprintf(
+								__( 'The Pods post type %1$s has an archive template set to be displayed by Pods Frontier Auto Template, but the Pod does not have an archive. You can enable post type archives in the "Advanced Options" tab.', 'pfat' ),
+								$label )
+						);
+					}
+
+				}
+
+			}
+
+		}
 	}
 
 } // Pods_PFAT
