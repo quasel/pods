@@ -205,16 +205,6 @@ class Pods_PFAT {
 					'label'      => __( 'Single Template Location', 'pods-pfat' ),
 					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'type'              => 'pick',
-					'pick_format_type' => 'single',
-					'pick_format_single' => 'dropdown',
-					'data' => array(
-						'append' => __( 'After', 'pods-pfat'),
-						'prepend' => __( 'Before', 'pods-pfat'),
-						'replace' => __( 'Replace', 'pods-pfat' ),
-					),
-					'default'    => 'true',
-
 				),
 				'pfat_archive' => array (
 					'label'      => __( 'Archive view template', 'pods-pfat' ),
@@ -227,16 +217,6 @@ class Pods_PFAT {
 					'label'      => __( 'Archive Template Location', 'pods-pfat' ),
 					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'type'              => 'pick',
-					'pick_format_type' => 'single',
-					'pick_format_single' => 'dropdown',
-					'data' => array(
-						'append' => __( 'After', 'pods-pfat'),
-						'prepend' => __( 'Before', 'pods-pfat'),
-						'replace' => __( 'Replace', 'pods-pfat' ),
-					),
-					'default'    => 'true',
-
 				),
 			);
 		}
@@ -263,17 +243,29 @@ class Pods_PFAT {
 					'label'      => __( 'Template Location', 'pods-pfat' ),
 					'help'       => __( 'Whether the template will go before, after or in place of the post content.', 'pods-pfat' ),
 					'depends-on' => array ( 'pfat_enable' => true ),
-					'type'              => 'pick',
-					'pick_format_type' => 'single',
-					'pick_format_single' => 'dropdown',
-					'data' => array(
-						'append' => __( 'After', 'pods-pfat'),
-						'prepend' => __( 'Before', 'pods-pfat'),
-						'replace' => __( 'Replace', 'pods-pfat' ),
-					),
-					'default'    => 'true',
 				),
 			);
+		}
+
+		//field options for template location
+		$location_pick = array(
+			'type'              	=> 'pick',
+			'pick_format_type' 		=> 'single',
+			'pick_format_single'	=> 'dropdown',
+			'data' => array(
+				'append' 	=> __( 'After', 'pods-pfat'),
+				'prepend' 	=> __( 'Before', 'pods-pfat'),
+				'replace' 	=> __( 'Replace', 'pods-pfat' ),
+			),
+			'default'    			=> 'true',
+		);
+
+		//add location options to fields without type set.
+		foreach ( $options[ 'pods-pfat' ] as $k => $option ) {
+			if ( !isset( $option['type' ] )) {
+				$options[ 'pods-pfat' ][ $k ] = array_merge( $option, $location_pick );
+			}
+
 		}
 
 		//BTW if it's neither, no options added, Tab wouldn't be there anyway.
