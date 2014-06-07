@@ -249,25 +249,27 @@ class Pods_PFAT {
 			);
 		}
 
-		//field options for template location
-		$location_pick = array(
-			'type'              	=> 'pick',
-			'pick_format_type' 		=> 'single',
-			'pick_format_single'	=> 'dropdown',
-			'data' => array(
-				'append' 	=> __( 'After', 'pods-pfat'),
-				'prepend' 	=> __( 'Before', 'pods-pfat'),
-				'replace' 	=> __( 'Replace', 'pods-pfat' ),
-			),
-			'default'    			=> 'true',
-		);
+		if ( isset( $options[ 'pods-pfat' ] ) ) {
+			//field options for template location
+			$location_pick = array (
+				'type'               => 'pick',
+				'pick_format_type'   => 'single',
+				'pick_format_single' => 'dropdown',
+				'data'               => array (
+					'append'  => __( 'After', 'pods-pfat' ),
+					'prepend' => __( 'Before', 'pods-pfat' ),
+					'replace' => __( 'Replace', 'pods-pfat' ),
+				),
+				'default'            => 'true',
+			);
 
-		//add location options to fields without type set.
-		foreach ( $options[ 'pods-pfat' ] as $k => $option ) {
-			if ( !isset( $option['type' ] )) {
-				$options[ 'pods-pfat' ][ $k ] = array_merge( $option, $location_pick );
+			//add location options to fields without type set.
+			foreach ( $options[ 'pods-pfat' ] as $k => $option ) {
+				if ( !isset( $option[ 'type' ] ) ) {
+					$options[ 'pods-pfat' ][ $k ] = array_merge( $option, $location_pick );
+				}
+
 			}
-
 		}
 
 		//BTW if it's neither, no options added, Tab wouldn't be there anyway.
