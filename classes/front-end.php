@@ -171,6 +171,9 @@ class Pods_PFAT_Frontend {
 	 */
 	function front( $content ) {
 
+		//prevent infinite loops caused by this method acting on post_content
+		remove_filter( 'the_content', array( $this, 'front' ) );
+
 		//start by getting current post or stdClass object
 		global $wp_query;
 		$obj = $wp_query->get_queried_object();
