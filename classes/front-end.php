@@ -19,8 +19,20 @@
 class Pods_PFAT_Frontend {
 
 	function __construct() {
+		/**
+		 * Allows plugin to append/replace the_excerpt
+		 *
+		 * Default is false, set to true to enable.
+		 */
+		if ( !defined( 'PFAT_USE_ON_EXCERPT' ) ) {
+			define( 'PFAT_USE_ON_EXCERPT', false );
+		}
 
 		add_filter( 'the_content', array( $this, 'front' ) );
+
+		if (  PFAT_USE_ON_EXCERPT  ) {
+			add_filter( 'the_excerpt', array ( $this, 'front' ) );
+		}
 
 	}
 
