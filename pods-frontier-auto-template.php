@@ -351,14 +351,16 @@ class Pods_PFAT {
 		$archive_test = pods_transient_get( $key );
 
 		if ( $archive_test === false || PODS_PFAT_DEV_MODE ) {
-			$front = $this->front_end( TRUE );
+			$front = $this->front_end( true );
 			$auto_pods = $front->auto_pods();
 			foreach ( $auto_pods as $pod ) {
-				if ( !$pod[ 'has_archive' ] && $pod[ 'archive' ] ) {
+				if ( !$pod[ 'has_archive' ] && $pod[ 'archive' ] && $pod[ 'type' ] !== 'taxonomy' ) {
 					$archive_test[ $pod[ 'label' ] ] = 'fail';
 				}
 
 			}
+
+			pods_transient_set( $key, $archive_test );
 
 		}
 
@@ -374,7 +376,7 @@ class Pods_PFAT {
 	function archive_warning() {
 
 		//create $page variable to check if we are on pods admin page
-		$page = pods_v('page','get', false, true );
+		$page = pods_v( 'page','get', false, true );
 
 		//check if we are on Pods Admin page
 		if ( $page === 'pods' ) {
