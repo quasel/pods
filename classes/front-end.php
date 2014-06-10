@@ -115,6 +115,7 @@ class Pods_PFAT_Frontend {
 					$archive = pods_v( 'pfat_archive', $pods->pod_data[ 'options' ], false, true );
 					$single_append = pods_v( 'pfat_append_single', $pods->pod_data[ 'options' ], true, true );
 					$archive_append = pods_v( 'pfat_append_archive', $pods->pod_data[ 'options' ], true, true );
+					$type = pods_v( 'object_type', $pods->pod_data, false, true );
 					//check if it's a post type that has an arhive
 					if ( $pods->pod_data['type'] === 'post_type' && $the_pod !== 'post' || $the_pod !== 'page' ) {
 						$has_archive = pods_v( 'has_archive', $pods->pod_data['options'], false, true );
@@ -132,6 +133,7 @@ class Pods_PFAT_Frontend {
 						'single_append' => $single_append,
 						'archive_append' => $archive_append,
 						'has_archive'	=> $has_archive,
+						'type' => $type,
 					);
 				}
 
