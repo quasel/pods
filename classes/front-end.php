@@ -173,9 +173,6 @@ class Pods_PFAT_Frontend {
 	 */
 	function front( $content ) {
 
-		//prevent infinite loops caused by this method acting on post_content
-		remove_filter( 'the_content', array( $this, 'front' ) );
-
 		//start by getting current post or stdClass object
 		global $wp_query;
 		$obj = $wp_query->get_queried_object();
@@ -253,18 +250,21 @@ class Pods_PFAT_Frontend {
 	/**
 	 * Attach Pods Template to $content
 	 *
-	 * @param string 		$template_name 	The name of a Pods Template to load.
-	 * @param string		$content		Post content
-	 * @param object		$pods			Current Pods object.
-	 * @param bool|string	$append			Optional. Whether to append, prepend or replace content. Defaults to true, which appends, if false, content is replaced, if 'prepend' content is prepended.
+	 * @param string        $template_name  The name of a Pods Template to load.
+	 * @param string        $content        Post content
+	 * @param Pods          $pods           Current Pods object.
+	 * @param bool|string   $append         Optional. Whether to append, prepend or replace content. Defaults to true, which appends, if false, content is replaced, if 'prepend' content is prepended.
 	 *
 	 * @return string $content with Pods Template appended if template exists
 	 *
 	 * @since 0.0.1
 	 */
 	function load_template( $template_name, $content, $pods, $append = true  ) {
-		//get the template
+
+		//prevent infinite loops caused by this method acting on post_content
+		remove_filter( 'the_content', array( $this, 'front' ) );
 		$template = $pods->template( $template_name );
+		add_filter( 'the_content', array( $this, 'front' ) );
 
 		//check if we have a valid template
 		if ( !is_null( $template ) ) {

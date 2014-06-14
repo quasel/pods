@@ -296,9 +296,12 @@ class Pods_PFAT {
 		if ( !is_admin() || $load_in_admin ) {
 			include_once( 'classes/front-end.php' );
 
-			$front = $GLOBALS[ 'Pods_PFAT_Frontend' ] = new Pods_PFAT_Frontend();
+			// Only instantiate if we haven't already
+			if ( !isset( $GLOBALS[ 'Pods_PFAT_Frontend' ] ) ) {
+				$GLOBALS[ 'Pods_PFAT_Frontend' ] = new Pods_PFAT_Frontend();
+			}
 
-			return $front;
+			return $GLOBALS[ 'Pods_PFAT_Frontend' ];
 		}
 
 	}
