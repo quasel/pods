@@ -250,29 +250,46 @@ class Pods_PFAT {
 		}
 
 		if ( isset( $options[ 'pods-pfat' ] ) ) {
-			//field options for template location
-			$location_pick = array (
+
+			//field options pick values
+			$pick = array (
 				'type'               => 'pick',
 				'pick_format_type'   => 'single',
 				'pick_format_single' => 'dropdown',
-				'data'               => array (
-					'append'  => __( 'After', 'pods-pfat' ),
-					'prepend' => __( 'Before', 'pods-pfat' ),
-					'replace' => __( 'Replace', 'pods-pfat' ),
-				),
 				'default'            => 'true',
 			);
+
+			//If the constant PODS_PFAT_TEMPLATE_SELECT_DROPDOWN is true, make the template select option a dropdown.
+			if ( is_array( $this->get_template_titles() ) && defined( 'PODS_PFAT_TEMPLATE_SELECT_DROPDOWN' ) && PODS_PFAT_TEMPLATE_SELECT_DROPDOWN ) {
+				foreach ( $pick as $k => $v ) {
+					$options[ 'pods-pfat' ][ 'pfat_single' ][ $k ] = $v;
+
+					$options[ 'pods-pfat' ][ 'pfat_archive' ][ $k ] = $v;
+
+				}
+
+				$options[ 'pods-pfat' ][ 'pfat_archive' ][ 'data' ] = $this->get_template_titles();
+				$options[ 'pods-pfat' ][ 'pfat_single' ][ 'data' ] = $this->get_template_titles();
+			}
+
+			//Add data to $pick for template location
+			unset( $pick['data']);
+			$location_data =  array (
+				'append'  => __( 'After', 'pods-pfat' ),
+				'prepend' => __( 'Before', 'pods-pfat' ),
+				'replace' => __( 'Replace', 'pods-pfat' ),
+			);
+			$pick['data'] = $location_data;
 
 			//add location options to fields without type set.
 			foreach ( $options[ 'pods-pfat' ] as $k => $option ) {
 				if ( !isset( $option[ 'type' ] ) ) {
-					$options[ 'pods-pfat' ][ $k ] = array_merge( $option, $location_pick );
+					$options[ 'pods-pfat' ][ $k ] = array_merge( $option, $pick );
 				}
 
 			}
-		}
 
-		//BTW if it's neither, no options added, Tab wouldn't be there anyway.
+		}
 
 		return $options;
 
@@ -395,6 +412,29 @@ class Pods_PFAT {
 					}
 
 				}
+
+			}
+
+		}
+
+	}
+
+	/**
+	 * Get titles of all Pods Templates
+	 *
+	 * @return array Array of template names
+	 *
+	 * @since 1.1.0
+	 */
+	function get_template_titles() {
+		$templates = get_posts( array( 'post_type' => '_pods_template', 'order'=> 'ASC', 'orderby' => 'title'));
+		if ( is_array( $templates ) ) {
+			foreach ( $templates as $template ) {
+				$titles[ ] = $template->post_title;
+			}
+
+			if ( is_array( $titles ) ) {
+				return $titles;
 
 			}
 
