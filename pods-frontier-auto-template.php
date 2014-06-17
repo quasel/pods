@@ -427,19 +427,15 @@ class Pods_PFAT {
 	 * @since 1.1.0
 	 */
 	function get_template_titles() {
+
+		$titles = array();
+
 		$templates = get_posts( array( 'post_type' => '_pods_template', 'order'=> 'ASC', 'orderby' => 'title'));
-		if ( is_array( $templates ) ) {
-			foreach ( $templates as $template ) {
-				$titles[ ] = $template->post_title;
-			}
-
-			if ( is_array( $titles ) ) {
-				return $titles;
-
-			}
-
+		foreach ( $templates as $template ) {
+			$titles[ ] = $template->post_title;
 		}
 
+		return $titles;
 	}
 
 } // Pods_PFAT
