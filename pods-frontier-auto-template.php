@@ -259,8 +259,8 @@ class Pods_PFAT {
 				'default'            => 'true',
 			);
 
-			//If the constant PODS_PFAT_TEMPLATE_SELECT_DROPDOWN is true, make the template select option a dropdown.
-			if ( is_array( $this->get_template_titles() ) && defined( 'PODS_PFAT_TEMPLATE_SELECT_DROPDOWN' ) && PODS_PFAT_TEMPLATE_SELECT_DROPDOWN ) {
+			//If the constant PFAT_TEMPLATE_SELECT_DROPDOWN is true, make the template select option a dropdown.
+			if ( is_array( $this->get_template_titles() ) && defined( 'PFAT_TEMPLATE_SELECT_DROPDOWN' ) && PFAT_TEMPLATE_SELECT_DROPDOWN ) {
 				foreach ( $pick as $k => $v ) {
 					$options[ 'pods-pfat' ][ 'pfat_single' ][ $k ] = $v;
 
