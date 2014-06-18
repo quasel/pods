@@ -81,3 +81,5 @@ Now includes an option to replace post content with the template instead of appe
 First WPORG release.
 = 1.1.0 =
 New options for where to place the template, as well as bug fixes and settings UI improvements.
+= 1.1.1 =
+Fixes for several issues and improves settings UI. For more information see: http://pods.io/?p=185097
