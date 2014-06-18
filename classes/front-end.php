@@ -180,13 +180,9 @@ class Pods_PFAT_Frontend {
 		if ( isset( $obj->post_type ) ) {
 			$current_post_type = $obj->post_type;
 
-			//also set $taxonomy false
-			$taxonomy = false;
 		}
 		elseif ( isset( $obj->taxonomy ) ) {
-			$taxonomy = $obj->taxonomy;
-
-			$current_post_type = $taxonomy;
+			$current_post_type = $obj->taxonomy;
 		}
 		elseif ( isset ( $obj->name ) ) {
 			$current_post_type = $obj->name;
@@ -220,6 +216,7 @@ class Pods_PFAT_Frontend {
 		//now use other methods in class to build array to search in/ use
 		$possible_pods = $this->auto_pods();
 
+
 		//check if $current_post_type is the key of the array of possible pods
 		if ( isset( $possible_pods[ $current_post_type ] ) ) {
 
@@ -234,7 +231,6 @@ class Pods_PFAT_Frontend {
 			if ( $this_pod[ 'single' ] && is_singular( $current_post_type ) ) {
 				//load the template
 				$content = $this->load_template( $this_pod[ 'single' ], $content , $pods, $this_pod[ 'single_append' ] );
-
 			}
 			//if pfat_archive was set try to use that template
 			//check if we are on an archive of the post type
@@ -250,7 +246,7 @@ class Pods_PFAT_Frontend {
 
 			}
 			//if is taxonomy archive of the selected taxonomy
-			elseif ( is_tax( $taxonomy )  ) {
+			elseif ( is_tax( $current_post_type )  ) {
 				//if pfat_single was set try to use that template
 				if ( $this_pod[ 'archive' ] ) {
 					//append the template
@@ -345,7 +341,7 @@ class Pods_PFAT_Frontend {
 
 			}
 			//if is taxonomy archive of the selected taxonomy
-			elseif ( is_tax( $taxonomy )  ) {
+			elseif ( is_tax( $current_post_type )  ) {
 				//if pfat_single was set try to use that template
 				if ( $this_pod[ 'archive' ] ) {
 					//set template
