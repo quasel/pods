@@ -64,9 +64,19 @@ First WPORG release.
 * Add option to replace post content with template instead of appending it.
 * Improved context detection in Pods_PFAT_Frontend::front()
 * Using pods_transient_set()/ pods_transient_get() for transient caching.
+= 1.1.0 =
+* Fix issue that caused error when @post_content was used in template.
+* More options for template location and the ability to set template location with a drop-down.
+* Optional template selection from drop-down menu. (Requires PFAT_TEMPLATE_SELECT_DROPDOWN constant to be defined as true ).
+* Optionally act on the_excerpt as well as the_content.
+* Added an admin nag if a archive template is set for a post type without archives.
+* New filter: 'pods_pfat_auto_pods_override' to override settings and prevent API calls.
+* New filter: 'pods_pfat_auto_pods' to change or edit settings after they are retrieved via the API.
 
 == Upgrade Notice ==
 = 0.2.0 =
 Now includes an option to replace post content with the template instead of appending it and more efficient code.
 = 1.0.0 =
 First WPORG release.
+= 1.1.0 =
+New options for where to place the template, as well as bug fixes and settings UI improvements.
