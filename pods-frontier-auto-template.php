@@ -475,8 +475,8 @@ function pfat_admin_notice_pods_not_active() {
 		global $pagenow;
 		if ( $pagenow == 'plugins.php' ) {
 			?>
-				<div class="updated">
-					<p><?php _e( 'You have activated Pods Frontier Auto Templates, but not the core Pods plugin.', 'pfat' ); ?></p>
+				<div class="error">
+					<p><?php _e( 'You have activated Pods Frontier Auto Template, but not the core Pods plugin.', 'pfat' ); ?></p>
 				</div>
 			<?php
 
@@ -510,8 +510,8 @@ function pfat_admin_notice_pods_min_version_fail() {
 			//check if we are on Pods Admin page
 			if ( $page === 'pods' ) {
 				?>
-				<div class="updated">
-					<p><?php _e( 'Pods Frontier Auto Templates, requires Pods version '.$minimum_version.' or later. Current version of Pods is '.PODS_VERSION, 'pfat' ); ?></p>
+				<div class="error">
+					<p><?php _e( 'Pods Frontier Auto Template, requires Pods version '.$minimum_version.' or later. Current version of Pods is '.PODS_VERSION, 'pfat' ); ?></p>
 				</div>
 			<?php
 
