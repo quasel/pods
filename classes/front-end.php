@@ -28,6 +28,10 @@ class Pods_PFAT_Frontend {
 			define( 'PFAT_USE_ON_EXCERPT', false );
 		}
 
+		if( !is_admin() ){
+			add_action( 'wp', array( $this, 'set_frontier_style_script' ) );
+		}
+
 		add_filter( 'the_content', array( $this, 'front' ) );
 
 		if (  PFAT_USE_ON_EXCERPT  ) {
@@ -161,18 +165,13 @@ class Pods_PFAT_Frontend {
 	}
 
 	/**
-	 * Outputs templates after the content as needed.
+	 * Fetches the current post type.
 	 *
-	 * @param string $content Post content
+	 * @return string current post type.
 	 *
-	 * @uses 'the_content' filter
-	 *
-	 * @return string Post content with the template appended if appropriate.
-	 *
-	 * @since 0.0.1
+	 * @since 1.1.0
 	 */
-	function front( $content ) {
-
+	function current_post_type() {
 		//start by getting current post or stdClass object
 		global $wp_query;
 		$obj = $wp_query->get_queried_object();
@@ -198,6 +197,25 @@ class Pods_PFAT_Frontend {
 		else {
 			$current_post_type = false;
 		}
+
+		return $current_post_type;
+	}
+
+	/**
+	 * Outputs templates after the content as needed.
+	 *
+	 * @param string $content Post content
+	 *
+	 * @uses 'the_content' filter
+	 *
+	 * @return string Post content with the template appended if appropriate.
+	 *
+	 * @since 0.0.1
+	 */
+	function front( $content ) {
+
+		// cet the current post type
+		$current_post_type = $this->current_post_type();
 
 		//now use other methods in class to build array to search in/ use
 		$possible_pods = $this->auto_pods();
@@ -287,4 +305,75 @@ class Pods_PFAT_Frontend {
 		return $content;
 	}
 
+
+	/**
+	 * Sets Styles and Scripts from the Frontier template addons.
+	 *
+	 * @since 1.1.0
+	 */
+	function set_frontier_style_script(){
+
+		if( !class_exists( 'Pods_Frontier' ) )
+			return;
+
+		// cet the current post type
+		$current_post_type = $this->current_post_type();
+
+		//now use other methods in class to build array to search in/ use
+		$possible_pods = $this->auto_pods();
+
+		if ( isset( $possible_pods[ $current_post_type ] ) ) {
+
+			$this_pod = $possible_pods[ $current_post_type ];
+
+			if ( $this_pod[ 'single' ] && is_singular( $current_post_type ) ) {
+				//set template
+				$template = $this_pod[ 'single' ];
+
+			}
+			//if pfat_archive was set try to use that template
+			//check if we are on an archive of the post type
+			elseif ( $this_pod[ 'archive' ] && is_post_type_archive( $current_post_type ) ) {
+				//set template
+				$template = $this_pod[ 'archive' ];
+
+			}
+			//if pfat_archive was set and we're in the blog index, try to append template
+			elseif ( is_home() && $this_pod[ 'archive' ] && $current_post_type === 'post'  ) {
+				//set template
+				$template = $this_pod[ 'archive' ];
+
+			}
+			//if is taxonomy archive of the selected taxonomy
+			elseif ( is_tax( $taxonomy )  ) {
+				//if pfat_single was set try to use that template
+				if ( $this_pod[ 'archive' ] ) {
+					//set template
+					$template = $this_pod[ 'archive' ];
+				}
+
+			}
+
+			if( isset( $template ) ){
+				global $frontier_styles, $frontier_scripts;
+
+				$template_post = pods()->api->load_template( array('name' => $template ) );
+
+				if( !empty( $template_post['id'] ) ){
+					// got a template - check for styles & scripts
+					$meta = get_post_meta($template_post['id'], 'view_template', true);
+					
+					$frontier = new Pods_Frontier;
+					if(!empty($meta['css'])){
+						$frontier_styles .= $meta['css'];
+					}
+
+					if(!empty($meta['js'])){
+						$frontier_scripts .= $meta['js'];
+					}
+				}				
+			}
+
+		}
+	}
 } //Pods_PFAT_Frontend
