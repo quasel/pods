@@ -1,5 +1,5 @@
 === Pods Frontier Auto Template ===
-Contributors: shelob9, sc0ttkclark, pglewis
+Contributors: shelob9, sc0ttkclark, pglewis, Desertsnowman
 Tags:  content types, custom fields, custom post types, custom taxonomies, pods, post types
 Donate link: http://podsfoundation.org/donate/
 Requires at least: 3.8
@@ -72,6 +72,7 @@ First WPORG release.
 * Added an admin nag if a archive template is set for a post type without archives.
 * New filter: 'pods_pfat_auto_pods_override' to override settings and prevent API calls.
 * New filter: 'pods_pfat_auto_pods' to change or edit settings after they are retrieved via the API.
+* Output Pods Frontier script and style fields.
 
 == Upgrade Notice ==
 = 0.2.0 =
