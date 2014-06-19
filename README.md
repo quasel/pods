@@ -1,7 +1,11 @@
-Pods Frontier Auto Display
-===========
+<p align="center">
+  <img src="./rectangle-logo.png" alt="Pods Frontier Auto Template" width="80%" height="80%" />
+</p>
 
-Automatic front-end output of Pods Templates.
+<h1 align="center">Pods Frontier Auto Template</h1>
+<p align="center">
+Automatic front-end output of Pods Templates. No PHP code required.
+</p>
 
 Supports custom post types, Pods extended posts and pages, as well as custom taxonomies.
 
@@ -15,7 +19,7 @@ For complete instructions see [http://pods.io/tutorials/creating-pods-plugins/us
 
 In the Pods editor, under the "Frontier Auto Display Options" tab, click the "Enable Automatic Pods Templates for this Pod?" option.
 
-Two new fields will be revealed: "Single item view template" and "Archive view template." In these fields enter the name of Pods Templates that you wish to use in each case.
+New fields will be revealed: "Single item view template" and "Archive view template" as well as fields to set the location for the template. In these fields enter the name of Pods Templates that you wish to use in each case and whether you want it to appear before, after or in place of the post content.
 
 The "Single item view template" option sets the Pods Template used for individual post pages and the "Archive view template" option sets the Pods Template used for the list of posts in the custom post type. For taxonomies only the "Archive view template" option will be shown.
 
