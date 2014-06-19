@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./rectangle-logo.png" alt="Pods Frontier Auto Template" width="80%" height="80%" />
+  <img src="./rectangle-logo.png" alt="Pods Frontier Auto Template" />
 </p>
 
 <h1 align="center">Pods Frontier Auto Template</h1>
